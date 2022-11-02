@@ -1,7 +1,9 @@
 // Init
 import React from 'react';
+import { SkeletonTheme } from 'react-loading-skeleton';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 // Files
 import Index from './routes/index';
@@ -10,12 +12,19 @@ import './css/index.css';
 // Component
 function App() {
   return (
-    <div className="App">
-      {/* toastify Container for Notification */}
-      <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar transition={Flip} />
+    <div className="app">
+      <SkeletonTheme baseColor="#202020" highlightColor="#444">
+        {/* toastify Container for Notification */}
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar
+          transition={Flip}
+        />
 
-      {/* Routes */}
-      <Index />
+        {/* Routes */}
+        <Index />
+      </SkeletonTheme>
     </div>
   );
 }
