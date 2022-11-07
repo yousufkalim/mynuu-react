@@ -1,8 +1,4 @@
 import React, { useRef } from 'react';
-// import Carousel from 'react-multi-carousel';
-import ProductImage from '../assets/images/product.jpg';
-import Wine from '../assets/images/wine.jpg';
-import Wine2 from '../assets/images/wine2.jpg';
 import ProductDetailCard from '../components/ProductDetailCard';
 import Cross from '../assets/icons/close.png';
 import 'react-multi-carousel/lib/styles.css';
@@ -27,45 +23,11 @@ import 'react-multi-carousel/lib/styles.css';
 //   },
 // };
 
-const products = [
-  {
-    name: 'Vodka',
-    description: 'Test testetsttete',
-    photo: ProductImage,
-    price: 22,
-  },
-  {
-    name: 'Pine apple juice',
-    description: 'Test testetsttete',
-    photo: Wine2,
-    price: 22,
-  },
-  {
-    name: 'Text test test test heading test test',
-    description: 'Test Description tess test test test test',
-    photo: Wine,
-    price: 100,
-  },
-  {
-    name: 'Text test test test heading test test',
-    description:
-      'Test Description tess test test test test Test Description tess test test test test Test Description tess test test test test',
-    photo: ProductImage,
-    price: 100,
-  },
-  {
-    name: 'Text test test test heading test test',
-    description: 'Test Description tess test test test test',
-    photo: Wine2,
-    price: 100,
-  },
-];
-
-function ProductPreview({ setOpenDetail }) {
+function ProductPreview({ setOpenDetail, selectedProduct }) {
   const ref = useRef(null);
 
   console.log('Reference ', ref);
-  console.log('Products => ', products);
+  console.log('Products => ', selectedProduct);
 
   return (
     <div ref={ref} className="product_preview">
@@ -73,7 +35,7 @@ function ProductPreview({ setOpenDetail }) {
         <img className="preview_close_img" src={Cross} alt="close" />
       </button>
       <div className="product_preview_wrapper">
-        {products?.map((product) => (
+        {selectedProduct?.products?.map((product) => (
           <ProductDetailCard product={product} />
         ))}
       </div>

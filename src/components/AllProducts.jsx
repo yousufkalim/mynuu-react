@@ -43,7 +43,7 @@ const recommendedProducts = [
   },
 ];
 
-function AllProducts({ allProducts, setOpenDetail }) {
+function AllProducts({ products, setOpenDetail, setSelectedProduct }) {
   let firstSecion = 0;
   let secondSection = 1;
   let thirdSection = 2;
@@ -59,15 +59,16 @@ function AllProducts({ allProducts, setOpenDetail }) {
       </div>
       {
         // eslint-disable-next-line consistent-return
-        allProducts?.map((products, ind) => {
+        products?.map((item, ind) => {
           const index = ind;
           if (firstSecion === index) {
             firstSecion += 3;
             return (
               <ProductSection2
                 setOpenDetail={setOpenDetail}
+                setSelectedProduct={setSelectedProduct}
                 key={products?.title}
-                products={products}
+                products={item}
               />
             );
           }
@@ -76,8 +77,9 @@ function AllProducts({ allProducts, setOpenDetail }) {
             return (
               <ProductSection1
                 setOpenDetail={setOpenDetail}
+                setSelectedProduct={setSelectedProduct}
                 key={products?.title}
-                products={products}
+                products={item}
               />
             );
           }
@@ -86,8 +88,9 @@ function AllProducts({ allProducts, setOpenDetail }) {
             return (
               <ProductSection3
                 setOpenDetail={setOpenDetail}
+                setSelectedProduct={setSelectedProduct}
                 key={products?.title}
-                products={products}
+                products={item}
               />
             );
           }

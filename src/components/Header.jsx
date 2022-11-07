@@ -2,26 +2,23 @@
 // Init
 // import dayjs from 'dayjs';
 import moment from 'moment';
-import React, { useEffect, useState, useRef } from 'react';
-import SearchInput from 'react-search-input';
+import React, { useEffect, useState } from 'react';
 // import HeaderImg from '../assets/images/header.jpg';
 import MenuIcon from '../assets/icons/menu.png';
-import SearchIcon from '../assets/icons/SearchIcon.svg';
 import '../css/Header.css';
+import SearchField from './SearchField';
 
 // Component
 export default function Header({
-  subCategories,
-  setSelectedSubCategory,
+  categories,
+  setSelectedCategory,
   stopScroll,
   setOpenList,
-  selectedSubCategory,
-  setSerachTerm,
+  selectedCategory,
+  setProducts,
 }) {
   const [currentSatus, setCurrentSatus] = useState(0);
   const [focused, setFocused] = useState(false);
-
-  const searchRef = useRef(null);
 
   const getTimeOfDay = () => {
     const todayDate = moment().utcOffset(0, true).format();
@@ -43,10 +40,10 @@ export default function Header({
   }, []);
 
   const handleSubCategory = (item) => {
-    if (item?.id === selectedSubCategory?.id) {
-      setSelectedSubCategory(null);
+    if (item?.name === selectedCategory?.name) {
+      setSelectedCategory(null);
     } else {
-      setSelectedSubCategory(item);
+      setSelectedCategory(item);
     }
   };
 
@@ -54,11 +51,13 @@ export default function Header({
     <div className="header_wrapper">
       <div className="header_container">
         <div className="header_overlay" />
-        <div className="heading">LAN NO 20</div>
-        <div className="description">
-          <span />
-          <div>CANTINA</div>
-          <span />
+        <div className="header_container_content">
+          <div className="heading">LAN NO 20</div>
+          <div className="description">
+            <span />
+            <div>CANTINA</div>
+            <span />
+          </div>
         </div>
         {/* <img className="header_img" src={HeaderImg} alt="header" /> */}
       </div>
@@ -70,23 +69,7 @@ export default function Header({
           </div>
           <div className={`header_right ${focused && 'header_focused'}`}>
             {/* // eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-            <div
-              role="presentation"
-              className="header_serach"
-              onBlur={() => setFocused(false)}
-              onClick={() => {
-                setFocused(true);
-              }}
-            >
-              <SearchInput
-                ref={searchRef}
-                id="search"
-                placeholder="Search"
-                className="search-input"
-                onChange={setSerachTerm}
-              />
-              <img src={SearchIcon} alt="" className="search-input-icon" />
-            </div>
+            <SearchField setFocused={setFocused} setProducts={setProducts} />
             <button className="header_menu" type="submit" onClick={() => setOpenList(true)}>
               <img src={MenuIcon} alt="menu" />
               <span>Menu</span>
@@ -94,10 +77,10 @@ export default function Header({
           </div>
         </div>
         <div className="header_subcategories">
-          {subCategories?.map((item) => (
+          {categories?.map((item) => (
             <button
               className={`header_subcategory ${
-                item?.id === selectedSubCategory?.id && 'header_subcategory_active'
+                item?.name === selectedCategory?.name && 'header_subcategory_active'
               }`}
               onClick={() => handleSubCategory(item)}
               type="submit"

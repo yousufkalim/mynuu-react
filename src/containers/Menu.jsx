@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-return-await */
 import React, { useEffect, useRef, useState } from 'react';
 import { createFilter } from 'react-search-input';
+
 import AllProducts from '../components/AllProducts';
 import Header from '../components/Header';
 import HeaderImage from '../assets/images/header.jpg';
@@ -10,30 +13,39 @@ import Wine4 from '../assets/images/products/wine4.jpg';
 import Wine6 from '../assets/images/products/wine6.jpg';
 import Wine8 from '../assets/images/products/wine8.jpg';
 import Wine9 from '../assets/images/products/wine9.jpg';
+import Spinner from '../assets/icons/spinner.gif';
 import ProductPreview from './ProductPreview';
 
-const subCat = [
-  { id: 1, name: 'Maxican Wine' },
-  { id: 2, name: 'Maxican Wine' },
-  { id: 3, name: 'Maxican Wine' },
-  { id: 4, name: 'Maxican Wine' },
-  { id: 5, name: 'Maxican Wine' },
-  { id: 6, name: 'Maxican Wine' },
-  { id: 7, name: 'Maxican Wine' },
-  { id: 8, name: 'Maxican Wine' },
-  { id: 9, name: 'Maxican Wine' },
-  { id: 10, name: 'Maxican Wine' },
-  { id: 11, name: 'Maxican Wine' },
-  { id: 12, name: 'Maxican Wine' },
-  { id: 13, name: 'Maxican Wine' },
-  { id: 14, name: 'Maxican Wine' },
-  { id: 15, name: 'Maxican Wine' },
-  { id: 16, name: 'Maxican Wine' },
-  { id: 17, name: 'Maxican Wine' },
-  { id: 18, name: 'Maxican Wine' },
-  { id: 19, name: 'Maxican Wine' },
-  { id: 20, name: 'Maxican Wine' },
-];
+import {
+  getAllMenus,
+  getProductsByMenu,
+  getProductsByCategory,
+  getProducts,
+  getAllSubCategories,
+} from '../utils/getData';
+
+// const subCat = [
+//   { id: 1, name: 'Maxican Wine' },
+//   { id: 2, name: 'Maxican Wine' },
+//   { id: 3, name: 'Maxican Wine' },
+//   { id: 4, name: 'Maxican Wine' },
+//   { id: 5, name: 'Maxican Wine' },
+//   { id: 6, name: 'Maxican Wine' },
+//   { id: 7, name: 'Maxican Wine' },
+//   { id: 8, name: 'Maxican Wine' },
+//   { id: 9, name: 'Maxican Wine' },
+//   { id: 10, name: 'Maxican Wine' },
+//   { id: 11, name: 'Maxican Wine' },
+//   { id: 12, name: 'Maxican Wine' },
+//   { id: 13, name: 'Maxican Wine' },
+//   { id: 14, name: 'Maxican Wine' },
+//   { id: 15, name: 'Maxican Wine' },
+//   { id: 16, name: 'Maxican Wine' },
+//   { id: 17, name: 'Maxican Wine' },
+//   { id: 18, name: 'Maxican Wine' },
+//   { id: 19, name: 'Maxican Wine' },
+//   { id: 20, name: 'Maxican Wine' },
+// ];
 
 const productWithCategories = [
   {
@@ -193,18 +205,43 @@ const productWithCategories = [
 const FIELDS_TO_FILTERS = ['name'];
 
 function Menu() {
-  const [category, setCategory] = useState('');
-  const [subCategories, setSubCategories] = useState([]);
-  const [selectedSubCategory, setSelectedSubCategory] = useState('');
+  const [menus, setMenus] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedMenu, setSelectedMenu] = useState();
+  const [selectedProduct, setSelectedProduct] = useState({
+    categoryId: '',
+    products: {},
+    selected: null,
+  });
+
   const [stopScroll, setStopScroll] = useState(false);
   const [openList, setOpenList] = useState(true);
   const [searchTerm, setSerachTerm] = useState('');
   const [openDetail, setOpenDetail] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const ref = useRef(null);
 
   useEffect(() => {
-    setSubCategories(subCat);
+    if (selectedMenu?.name) {
+      getProductsByMenu(selectedMenu, setLoading, setProducts);
+    }
+  }, [selectedMenu]);
+
+  useEffect(() => {
+    if (selectedCategory?.id) {
+      getProductsByCategory(selectedCategory, setLoading, setProducts);
+    } else {
+      getProducts(setLoading, setProducts);
+    }
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    getAllMenus(setMenus);
+    getAllSubCategories(setCategories);
+    getProducts(setLoading, setProducts);
   }, []);
 
   const onScroll = () => {
@@ -217,7 +254,7 @@ function Menu() {
     }
   };
 
-  console.log('cat ', category);
+  console.log('Selected product ===> ', selectedProduct);
 
   const searchProducts = productWithCategories?.map((item) => ({
     ...item,
@@ -231,21 +268,32 @@ function Menu() {
       ref={ref}
       className="menu"
     >
+      {loading && (
+        <div className="spinner_container">
+          <img className="spinner" src={Spinner} alt="loading" />
+        </div>
+      )}
       <Header
-        selectedSubCategory={selectedSubCategory}
-        setSelectedSubCategory={setSelectedSubCategory}
-        subCategories={subCategories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        categories={categories}
         stopScroll={stopScroll}
+        setProducts={setProducts}
         setOpenList={setOpenList}
         setSerachTerm={setSerachTerm}
       />
       {openList && (
         <div className="popup_container">
-          <MenuList setOpenList={setOpenList} setCategory={setCategory} />
+          <MenuList menus={menus} setSelectedMenu={setSelectedMenu} setOpenList={setOpenList} />
         </div>
       )}
       <div className="menu_content">
-        <AllProducts setOpenDetail={setOpenDetail} allProducts={searchProducts} />
+        <AllProducts
+          products={products}
+          setSelectedProduct={setSelectedProduct}
+          setOpenDetail={setOpenDetail}
+          allProducts={searchProducts}
+        />
         {/* {
           subCat?.map((item) => (
             <div style={{ marginTop: '50px' }}>{item}</div>
@@ -254,7 +302,7 @@ function Menu() {
       </div>
       {openDetail && (
         <div className="popup_container">
-          <ProductPreview setOpenDetail={setOpenDetail} />
+          <ProductPreview selectedProduct={selectedProduct} setOpenDetail={setOpenDetail} />
         </div>
       )}
     </div>

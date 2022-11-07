@@ -18,7 +18,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   width: 100%;
-  gap: 3.5rem;
+  gap: 3rem;
 }
 
 .product_section_1::-webkit-scrollbar {
@@ -91,7 +91,7 @@
   justify-content: flex-start;
   overflow-x: auto;
   width: 100%;
-  gap: 2.5rem;
+  gap: 3rem;
 }
 
 .product_section_2::-webkit-scrollbar {
@@ -170,7 +170,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   width: 100%;
-  gap: 3.5rem;
+  gap: 3rem;
   padding-bottom: 3rem;
 }
 

@@ -5,6 +5,10 @@
   /* margin: 2rem 0rem 4rem 2rem; */
 }
 
+.products .product_section:last-of-type {
+  padding-bottom: 10rem;
+}
+
 .products_wrapper {
   display: flex;
   gap: 4rem;

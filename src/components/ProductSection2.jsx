@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import ProductSectionHoc from '../hoc/ProductSectionHoc';
 
-function ProductSection2({ products, setOpenDetail }) {
+function ProductSection2({ products, setOpenDetail, setSelectedProduct }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -13,13 +13,29 @@ function ProductSection2({ products, setOpenDetail }) {
     }, 4000);
   }, []);
 
+  const handleSelectProduct = (index) => {
+    const obj = {
+      products: products?.products,
+      selectedIndex: index,
+    };
+    setSelectedProduct(obj);
+    setOpenDetail(true);
+  };
+
   console.log('Loading ', loaded);
 
   return (
-    <ProductSectionHoc productsLength={products?.products?.length} sectionTitle={products.title}>
+    <ProductSectionHoc
+      productsLength={products?.products?.length}
+      sectionTitle={products?.categoryName}
+    >
       <div className="product_section_2">
-        {products?.products?.map((item) => (
-          <div role="presentation" className="product_card_2" onClick={() => setOpenDetail(true)}>
+        {products?.products?.map((item, index) => (
+          <div
+            role="presentation"
+            className="product_card_2"
+            onClick={() => handleSelectProduct(index)}
+          >
             {!loaded && <Skeleton className="skeleton" count={5} />}
 
             <div className="product_image">
@@ -27,7 +43,7 @@ function ProductSection2({ products, setOpenDetail }) {
                 className="product_img"
                 onLoad={() => setLoaded(true)}
                 alt="product"
-                src={item?.photo}
+                src={item?.image}
               />
             </div>
             <div className="product_content">
