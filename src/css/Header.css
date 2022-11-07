@@ -19,6 +19,11 @@
   /* height: 80%; */
 }
 
+.header_logo {
+  width: 30rem;
+  height: 30rem;
+  border-radius: 50%;
+}
 .header_overlay {
   position: absolute;
   top: 0;
@@ -189,6 +194,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+  .header_logo {
+    width: 23rem;
+    height: 23rem;
   }
   .header_container span {
     width: 32px;

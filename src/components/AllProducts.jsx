@@ -1,5 +1,6 @@
+/* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductSection1 from './ProductSection1';
 import ProductSection2 from './ProductSection2';
 import ProductSection3 from './ProductSection3';
@@ -8,6 +9,7 @@ import HeaderImage from '../assets/images/header.jpg';
 import Wine3 from '../assets/images/products/wine3.jpg';
 import Wine5 from '../assets/images/products/wine5.jpg';
 import Wine2 from '../assets/images/products/wine2.jpg';
+import ProductMobile from './ProductMobile';
 
 const recommendedProducts = [
   {
@@ -44,9 +46,18 @@ const recommendedProducts = [
 ];
 
 function AllProducts({ products, setOpenDetail, setSelectedProduct }) {
+  const [mobileView, setMobileView] = useState(false);
+
+  const media = window.matchMedia('(max-width: 500px)').matches;
+
+  useEffect(() => {
+    setMobileView(media);
+  }, [media]);
+
   let firstSecion = 0;
   let secondSection = 1;
   let thirdSection = 2;
+
   return (
     <div className="products">
       <div className="products_container">
@@ -59,42 +70,51 @@ function AllProducts({ products, setOpenDetail, setSelectedProduct }) {
       </div>
       {
         // eslint-disable-next-line consistent-return
-        products?.map((item, ind) => {
-          const index = ind;
-          if (firstSecion === index) {
-            firstSecion += 3;
-            return (
-              <ProductSection2
-                setOpenDetail={setOpenDetail}
-                setSelectedProduct={setSelectedProduct}
-                key={products?.title}
-                products={item}
-              />
-            );
-          }
-          if (secondSection === index) {
-            secondSection += 3;
-            return (
-              <ProductSection1
-                setOpenDetail={setOpenDetail}
-                setSelectedProduct={setSelectedProduct}
-                key={products?.title}
-                products={item}
-              />
-            );
-          }
-          if (thirdSection === index) {
-            thirdSection += 3;
-            return (
-              <ProductSection3
-                setOpenDetail={setOpenDetail}
-                setSelectedProduct={setSelectedProduct}
-                key={products?.title}
-                products={item}
-              />
-            );
-          }
-        })
+        mobileView
+          ? products?.map((item) => (
+            <ProductMobile
+              setOpenDetail={setOpenDetail}
+              setSelectedProduct={setSelectedProduct}
+              key={products?.title}
+              products={item}
+            />
+          ))
+          : products?.map((item, ind) => {
+            const index = ind;
+            if (firstSecion === index) {
+              firstSecion += 3;
+              return (
+                <ProductSection2
+                  setOpenDetail={setOpenDetail}
+                  setSelectedProduct={setSelectedProduct}
+                  key={products?.title}
+                  products={item}
+                />
+              );
+            }
+            if (secondSection === index) {
+              secondSection += 3;
+              return (
+                <ProductSection1
+                  setOpenDetail={setOpenDetail}
+                  setSelectedProduct={setSelectedProduct}
+                  key={products?.title}
+                  products={item}
+                />
+              );
+            }
+            if (thirdSection === index) {
+              thirdSection += 3;
+              return (
+                <ProductSection3
+                  setOpenDetail={setOpenDetail}
+                  setSelectedProduct={setSelectedProduct}
+                  key={products?.title}
+                  products={item}
+                />
+              );
+            }
+          })
       }
     </div>
   );

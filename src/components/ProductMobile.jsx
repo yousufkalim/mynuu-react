@@ -1,0 +1,61 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable max-len */
+import React, { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import ProductSectionHoc from '../hoc/ProductSectionHoc';
+
+function ProductMobile({ products, setOpenDetail, setSelectedProduct }) {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoaded(true);
+    }, 4000);
+  }, []);
+
+  const handleSelectProduct = (index) => {
+    const obj = {
+      products: products?.products,
+      selectedIndex: index,
+    };
+    setSelectedProduct(obj);
+    setOpenDetail(true);
+  };
+
+  return (
+    <ProductSectionHoc
+      productsLength={products?.products?.length}
+      sectionTitle={products?.categoryName}
+    >
+      <div className="product_section_mobile">
+        {products?.products?.map((item, index) => (
+          <div
+            role="presentation"
+            className="product_card_mobile"
+            onClick={() => handleSelectProduct(index)}
+          >
+            {!loaded && <Skeleton className="skeleton" count={5} />}
+
+            <div className="product_image">
+              <img
+                className="product_img"
+                onLoad={() => setLoaded(true)}
+                alt="product"
+                src={item?.image}
+              />
+            </div>
+            <div className="product_content">
+              <div className="product_heading text_ellipsis_1">{item?.name}</div>
+              <div className="product_description_container">
+                <div className="product_description text_ellipsis_1">{item?.description}</div>
+                <div className="product_price">{`$${item?.price}`}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </ProductSectionHoc>
+  );
+}
+
+export default ProductMobile;

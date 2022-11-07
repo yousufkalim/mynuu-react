@@ -2,8 +2,6 @@ import React from 'react';
 import ProductSectionHoc from '../hoc/ProductSectionHoc';
 
 function ProductSection1({ products, setOpenDetail, setSelectedProduct }) {
-  console.log('Products ', products);
-
   const handleSelectProduct = (index) => {
     const obj = {
       products: products?.products,

@@ -26,9 +26,6 @@ import 'react-multi-carousel/lib/styles.css';
 function ProductPreview({ setOpenDetail, selectedProduct }) {
   const ref = useRef(null);
 
-  console.log('Reference ', ref);
-  console.log('Products => ', selectedProduct);
-
   return (
     <div ref={ref} className="product_preview">
       <button className="preview_close" type="submit" onClick={() => setOpenDetail(false)}>

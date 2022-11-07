@@ -3,17 +3,14 @@ import SearchInput from 'react-search-input';
 import SearchIcon from '../assets/icons/SearchIcon.svg';
 import { getSearchedProducts } from '../utils/getData';
 
-function SearchField({ setFocused }) {
+function SearchField({ setFocused, setLoading, setProducts }) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
-      console.log('Enter Press ');
-      getSearchedProducts(searchTerm);
+      getSearchedProducts(searchTerm, setLoading, setProducts);
     }
   };
-
-  console.log('Search Term ', searchTerm);
 
   const searchRef = useRef(null);
 

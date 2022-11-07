@@ -22,8 +22,6 @@ function ProductSection2({ products, setOpenDetail, setSelectedProduct }) {
     setOpenDetail(true);
   };
 
-  console.log('Loading ', loaded);
-
   return (
     <ProductSectionHoc
       productsLength={products?.products?.length}
