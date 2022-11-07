@@ -1,28 +1,26 @@
 import React from 'react';
 import Cross from '../assets/icons/close.png';
 
-const categories = ['Wines by the glass', 'Wine list', 'Spirits', 'Drink menu'];
-
-function MenuList({ setCategory, setOpenList }) {
-  const selectCategory = (cat) => {
-    setCategory(cat);
+function MenuList({ menus, setSelectedMenu, setOpenList }) {
+  const handleMenu = (menu) => {
+    setSelectedMenu(menu);
   };
 
   return (
     <div className="popup">
       <div className="popup_select">Select Type</div>
       <div className="popup_list">
-        {categories?.map((item) => (
-          <button
-            type="submit"
+        {menus?.map((item) => (
+          <div
+            role="presentation"
             onClick={() => {
-              selectCategory(item);
+              handleMenu(item);
               setOpenList(false);
             }}
             className="popup_name"
           >
-            {item}
-          </button>
+            {item.name}
+          </div>
         ))}
       </div>
       <button onClick={() => setOpenList(false)} className="popup_btn" type="submit">
