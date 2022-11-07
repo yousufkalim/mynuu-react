@@ -22,6 +22,7 @@ import {
   getProductsByCategory,
   getProducts,
   getAllSubCategories,
+  getRestaurantById,
 } from '../utils/getData';
 
 // const subCat = [
@@ -215,6 +216,7 @@ function Menu() {
     products: {},
     selected: null,
   });
+  const [restaurant, setRestaurant] = useState({});
 
   const [stopScroll, setStopScroll] = useState(false);
   const [openList, setOpenList] = useState(true);
@@ -242,6 +244,7 @@ function Menu() {
     getAllMenus(setMenus);
     getAllSubCategories(setCategories);
     getProducts(setLoading, setProducts);
+    getRestaurantById('UrFryd4KEYQsgh3DGViBvXqyIGP2', setRestaurant);
   }, []);
 
   const onScroll = () => {
@@ -253,8 +256,6 @@ function Menu() {
       setStopScroll(false);
     }
   };
-
-  console.log('Selected product ===> ', selectedProduct);
 
   const searchProducts = productWithCategories?.map((item) => ({
     ...item,
@@ -278,9 +279,11 @@ function Menu() {
         setSelectedCategory={setSelectedCategory}
         categories={categories}
         stopScroll={stopScroll}
+        restaurant={restaurant}
         setProducts={setProducts}
         setOpenList={setOpenList}
         setSerachTerm={setSerachTerm}
+        setLoading={setLoading}
       />
       {openList && (
         <div className="popup_container">

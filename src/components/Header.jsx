@@ -16,6 +16,8 @@ export default function Header({
   setOpenList,
   selectedCategory,
   setProducts,
+  setLoading,
+  restaurant,
 }) {
   const [currentSatus, setCurrentSatus] = useState(0);
   const [focused, setFocused] = useState(false);
@@ -52,12 +54,13 @@ export default function Header({
       <div className="header_container">
         <div className="header_overlay" />
         <div className="header_container_content">
-          <div className="heading">LAN NO 20</div>
+          <img className="header_logo" src={restaurant?.logo} alt="logo" />
+          {/* <div className="heading">LAN NO 20</div>
           <div className="description">
             <span />
             <div>CANTINA</div>
             <span />
-          </div>
+          </div> */}
         </div>
         {/* <img className="header_img" src={HeaderImg} alt="header" /> */}
       </div>
@@ -69,7 +72,11 @@ export default function Header({
           </div>
           <div className={`header_right ${focused && 'header_focused'}`}>
             {/* // eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-            <SearchField setFocused={setFocused} setProducts={setProducts} />
+            <SearchField
+              setLoading={setLoading}
+              setFocused={setFocused}
+              setProducts={setProducts}
+            />
             <button className="header_menu" type="submit" onClick={() => setOpenList(true)}>
               <img src={MenuIcon} alt="menu" />
               <span>Menu</span>
