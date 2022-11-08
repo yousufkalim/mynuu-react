@@ -13,10 +13,10 @@ function ProductMobile({ products, setOpenDetail, setSelectedProduct }) {
     }, 4000);
   }, []);
 
-  const handleSelectProduct = (index) => {
+  const handleSelectProduct = (id) => {
     const obj = {
       products: products?.products,
-      selectedIndex: index,
+      selectedId: id,
     };
     setSelectedProduct(obj);
     setOpenDetail(true);
@@ -28,11 +28,12 @@ function ProductMobile({ products, setOpenDetail, setSelectedProduct }) {
       sectionTitle={products?.categoryName}
     >
       <div className="product_section_mobile">
-        {products?.products?.map((item, index) => (
+        {products?.products?.map((item) => (
           <div
             role="presentation"
             className="product_card_mobile"
-            onClick={() => handleSelectProduct(index)}
+            key={item?.id}
+            onClick={() => handleSelectProduct(item?.id)}
           >
             {!loaded && <Skeleton className="skeleton" count={5} />}
 
@@ -46,10 +47,8 @@ function ProductMobile({ products, setOpenDetail, setSelectedProduct }) {
             </div>
             <div className="product_content">
               <div className="product_heading text_ellipsis_1">{item?.name}</div>
-              <div className="product_description_container">
-                <div className="product_description text_ellipsis_1">{item?.description}</div>
-                <div className="product_price">{`$${item?.price}`}</div>
-              </div>
+              <div className="product_description text_ellipsis_1">{item?.description}</div>
+              <div className="product_price">{`${item?.price} USD`}</div>
             </div>
           </div>
         ))}

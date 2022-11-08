@@ -41,6 +41,8 @@ export const getRestaurantById = async (restaurantId, setRestaurant) => {
 export const getProducts = async (setLoading, setProducts) => {
   const docs = query(
     collection(db, 'products'),
+    where('deleted', '==', false),
+    where('enabled', '==', true),
     where('restaurantId', '==', 'UrFryd4KEYQsgh3DGViBvXqyIGP2'),
   );
 
@@ -49,6 +51,7 @@ export const getProducts = async (setLoading, setProducts) => {
   const allProducts = productDocs?.docs?.map((docum) => ({ id: docum.id, ...docum.data() }));
   if (allProducts?.length) {
     const allCategories = allProducts?.map((item) => item.categoryId);
+
     const uniqueCategories = [...new Set(allCategories)];
 
     const limitCategories = uniqueCategories?.filter((cat, index) => index < 5);
@@ -61,7 +64,7 @@ export const getProducts = async (setLoading, setProducts) => {
   setLoading(false);
 };
 
-export const getAllSubCategories = async (setCategories) => {
+export const getAllSubCategories = async (selectedMenu, setCategories) => {
   const docs = query(
     collection(db, 'categories'),
     where('restaurantId', '==', 'UrFryd4KEYQsgh3DGViBvXqyIGP2'),
@@ -83,7 +86,12 @@ export const getAllMenus = async (setMenus) => {
 
 export const getProductsByMenu = async (selectedMenu, setLoading, setProducts) => {
   setLoading(true);
-  const productQuery = query(collection(db, 'products'), where('menuId', '==', selectedMenu?.id));
+  const productQuery = query(
+    collection(db, 'products'),
+    where('deleted', '==', false),
+    where('enabled', '==', true),
+    where('menuId', '==', selectedMenu?.id),
+  );
   const productsData = await getDocs(productQuery);
 
   const allProducts = productsData?.docs?.map((docum) => ({ id: docum?.id, ...docum.data() }));
@@ -104,6 +112,8 @@ export const getProductsByCategory = async (selectedCategory, setLoading, setPro
   setLoading(true);
   const productQuery = query(
     collection(db, 'products'),
+    where('deleted', '==', false),
+    where('enabled', '==', true),
     where('categoryId', '==', selectedCategory?.id),
   );
   const productsData = await getDocs(productQuery);
@@ -134,6 +144,8 @@ export const getSearchedProducts = async (searchTerm, setLoading, setProducts) =
     setLoading(true);
     const productQuery = query(
       collection(db, 'products'),
+      where('deleted', '==', false),
+      where('enabled', '==', true),
       where('restaurantId', '==', 'UrFryd4KEYQsgh3DGViBvXqyIGP2'),
       where('keyword', 'in', [searchText]),
     );
