@@ -123,8 +123,9 @@
     width: 5rem;
   } */
   .header_right {
-    flex-basis: 35%;
+    flex-basis: 28%;
     transition: 0.3s all ease-in-out;
+    gap: 8px;
   }
   .header_focused {
     width: 100%;
@@ -132,7 +133,7 @@
   }
   .search-input input {
     padding: 10px;
-    height: 40px;
+    height: 42px;
   }
   .header_focused .search-input input {
     transition: 0.5s all ease-in-out;
@@ -141,13 +142,16 @@
     padding: 0 10px 0 35px;
   }
   .search-input-icon {
-    left: 25%;
+    left: 32%;
   }
   .search-input input::placeholder {
     visibility: hidden;
   }
   .header_focused .search-input-icon {
     left: 7%;
+  }
+  .popup {
+    padding-block: 10rem;
   }
 }
 
