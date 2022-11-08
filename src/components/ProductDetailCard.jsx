@@ -1,8 +1,8 @@
 import React from 'react';
 
-function ProductDetailCard({ product }) {
+function ProductDetailCard({ product, active }) {
   return (
-    <div className="card_detail">
+    <div className={`card_detail ${active && 'card_detail-active'}`}>
       <div className="product_image">
         <img className="product_img" alt="product" src={product?.image} />
       </div>

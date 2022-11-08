@@ -90,3 +90,9 @@
   font-weight: 600;
   color: var(--text-yellow);
 }
+
+@media screen and (max-width: 500px) {
+  .products_container {
+    margin-block: 5rem 7rem;
+  }
+}

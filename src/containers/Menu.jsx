@@ -212,9 +212,8 @@ function Menu() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedMenu, setSelectedMenu] = useState();
   const [selectedProduct, setSelectedProduct] = useState({
-    categoryId: '',
     products: {},
-    selected: null,
+    selectedId: '',
   });
   const [restaurant, setRestaurant] = useState({});
 
@@ -242,15 +241,22 @@ function Menu() {
 
   useEffect(() => {
     getAllMenus(setMenus);
-    getAllSubCategories(setCategories);
+    getAllSubCategories(selectedMenu, setCategories);
     getProducts(setLoading, setProducts);
     getRestaurantById('UrFryd4KEYQsgh3DGViBvXqyIGP2', setRestaurant);
   }, []);
 
   const onScroll = () => {
     const { scrollTop } = document.getElementById('menu');
+    const mobile = window.matchMedia('(max-width: 500px)').matches;
 
-    if (scrollTop > 212) {
+    if (mobile) {
+      if (scrollTop > 100) {
+        setStopScroll(true);
+      } else if (stopScroll) {
+        setStopScroll(false);
+      }
+    } else if (scrollTop > 212) {
       setStopScroll(true);
     } else if (stopScroll) {
       setStopScroll(false);
@@ -261,6 +267,7 @@ function Menu() {
     ...item,
     products: item?.products?.filter(createFilter(searchTerm, FIELDS_TO_FILTERS)),
   }));
+
   return (
     <div
       id="menu"

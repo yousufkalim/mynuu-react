@@ -55,6 +55,10 @@ export default function Header({
         <div className="header_overlay" />
         <div className="header_container_content">
           <img className="header_logo" src={restaurant?.logo} alt="logo" />
+          <div className="header_logo_text">
+            <div className="header_logo_left">LA</div>
+            <div className="header_logo_right">VEINTE</div>
+          </div>
           {/* <div className="heading">LAN NO 20</div>
           <div className="description">
             <span />
