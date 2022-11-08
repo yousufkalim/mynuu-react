@@ -1,6 +1,7 @@
 import React from 'react';
 
 function ProductDetailCard({ product, active }) {
+  const media = window.matchMedia('(max-width: 500px)').matches;
   return (
     <div className={`card_detail ${active && 'card_detail-active'}`}>
       <div className="product_image">
@@ -9,7 +10,9 @@ function ProductDetailCard({ product, active }) {
       <div className="product_content">
         <div className="product_heading">{product?.name}</div>
         <div className="product_description">{product?.description}</div>
-        <div className="product_price">{`$${product?.price}`}</div>
+        <div className="product_price">
+          {media ? `${product?.price} USD` : `$${product?.price}`}
+        </div>
       </div>
     </div>
   );

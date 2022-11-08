@@ -11,6 +11,20 @@
 @import url('./ProductPreview.css');
 @import url('./Responsiveness.css');
 
+/*    Import Font Family    */
+@font-face {
+  font-family: 'Helvetica';
+  src: url('../assets/fonts/helveticaneue/HelveticaNeue.ttf') format('ttf'),
+    url('../assets/fonts/helveticaneue/Helvetica\ Neu\ Bold.ttf') format('ttf'),
+    url('../assets/fonts/helveticaneue/HelveticaNeue\ Light.ttf') format('ttf'),
+    url('../assets/fonts/helveticaneue/HelveticaNeue\ Medium.ttf') format('ttf'),
+    url('../assets/fonts/helveticaneue/HelveticaNeueBd.ttf') format('ttf');
+}
+@font-face {
+  font-family: 'Agrozza';
+  src: url('../assets/fonts/AGROZZA/AgrozzaDemoRegular.ttf') format('ttf');
+}
+
 /* Defaults */
 * {
   padding: 0;
@@ -37,6 +51,8 @@
 
 html {
   font-size: 62.5%;
+}
+body {
   font-family: 'Georama', sans-serif;
 }
 
@@ -100,6 +116,9 @@ html {
 @media screen and (max-width: 500px) {
   html {
     font-size: 50%;
+  }
+  body {
+    font-family: 'Helvetica', Fallback, sans-serif;
   }
 }
 

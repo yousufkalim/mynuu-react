@@ -2,10 +2,12 @@
 import React, { useEffect, useRef } from 'react';
 import ProductDetailCard from '../components/ProductDetailCard';
 import Cross from '../assets/icons/close.png';
+import CloseMobile from '../assets/icons/close_white.png';
 
 function ProductPreview({ setOpenDetail, selectedProduct }) {
   const ref = useRef(null);
   const productRef = useRef(null);
+  const media = window.matchMedia('(max-width: 500px)').matches;
 
   useEffect(() => {
     const { products, selectedId } = selectedProduct;
@@ -16,17 +18,17 @@ function ProductPreview({ setOpenDetail, selectedProduct }) {
         const prevElementWidth = prevPosition + 40;
         const elementPosition = productRef?.current?.childNodes[findIndex].offsetLeft;
         productRef?.current.scrollTo({
-          left: elementPosition - prevElementWidth,
+          left: media ? elementPosition - 20 : elementPosition - prevElementWidth,
           behavior: 'smooth',
         });
       }
     }
-  }, [selectedProduct]);
+  }, [selectedProduct, media]);
 
   return (
     <div ref={ref} className="product_preview">
       <button className="preview_close" type="submit" onClick={() => setOpenDetail(false)}>
-        <img className="preview_close_img" src={Cross} alt="close" />
+        <img className="preview_close_img" src={media ? CloseMobile : Cross} alt="close" />
       </button>
       <div
         style={{

@@ -250,9 +250,9 @@
   display: flex;
   flex-direction: column;
   background: transparent;
-  flex-basis: 48%;
-  width: 48%;
-  min-width: 48%;
+  flex-basis: 47%;
+  width: 47%;
+  min-width: 47%;
   height: 35rem;
   position: relative;
   cursor: pointer;
@@ -302,4 +302,14 @@
   font-weight: 500;
   font-size: 1.4rem;
   padding: 3px 0;
+}
+
+@media screen and (max-width: 500px) {
+  .product_section_mobile {
+    overflow-x: hidden;
+    flex-wrap: wrap;
+  }
+  .product_section {
+    margin-bottom: 4rem;
+  }
 }

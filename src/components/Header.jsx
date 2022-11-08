@@ -1,14 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-// Init
-// import dayjs from 'dayjs';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-// import HeaderImg from '../assets/images/header.jpg';
 import MenuIcon from '../assets/icons/menu.png';
 import '../css/Header.css';
 import SearchField from './SearchField';
 
-// Component
 export default function Header({
   categories,
   setSelectedCategory,
@@ -59,14 +55,7 @@ export default function Header({
             <div className="header_logo_left">LA</div>
             <div className="header_logo_right">VEINTE</div>
           </div>
-          {/* <div className="heading">LAN NO 20</div>
-          <div className="description">
-            <span />
-            <div>CANTINA</div>
-            <span />
-          </div> */}
         </div>
-        {/* <img className="header_img" src={HeaderImg} alt="header" /> */}
       </div>
       <div className={`header ${stopScroll && 'sticky_header'}`}>
         <div className="header_top">
