@@ -27,6 +27,7 @@
     "react-dom": "^18.2.0",
     "react-loading-skeleton": "^3.1.0",
     "react-move": "^6.5.0",
+    "react-otp-input": "^2.4.0",
     "react-phone-number-input": "^3.2.12",
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
