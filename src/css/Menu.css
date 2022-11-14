@@ -44,7 +44,7 @@
   position: absolute;
   top: 0;
   z-index: 6;
-  background: var(--black);
+  background: #1e1e1e;
   animation: popup_list_anim 0.3s linear alternate;
 }
 .popup {
@@ -116,7 +116,7 @@
 
 @media screen and (max-width: 500px) {
   .menu_content {
-    padding-left: 4%;
-    padding-right: 4%;
+    padding-left: 6%;
+    padding-right: 6%;
   }
 }

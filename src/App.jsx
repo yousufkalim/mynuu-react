@@ -4,6 +4,8 @@ import { SkeletonTheme } from 'react-loading-skeleton';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-loading-skeleton/dist/skeleton.css';
+import 'react-circular-progressbar/dist/styles.css';
+import 'react-phone-number-input/style.css';
 
 // Files
 import Index from './routes/index';

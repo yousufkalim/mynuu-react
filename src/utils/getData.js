@@ -5,7 +5,7 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-return-await */
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore/lite';
-import db from './firebase';
+import { db } from './firebase';
 
 // Categorized all Products by their category
 export const getCategorizedProducts = async (productCategories, allProducts) => {
