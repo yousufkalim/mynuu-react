@@ -1,34 +1,35 @@
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable max-len */
-/* eslint-disable no-undef */
-/* eslint-disable no-return-assign */
 import React, { useState, useEffect } from 'react';
 import { getAuth, signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
+import OtpInput from 'react-otp-input';
 import { toast } from 'react-toastify';
+// import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+// import { easeQuadInOut } from 'd3-ease';
+// import AnimatedProgress from '../components/AnimatedProgress';
+// import AnimatedProgressProvider from '../components/AnimatedProgressProvider';
+// import SelectCountry from '../components/SelectCountry';
 
 function SignInPhone() {
   const [phone, setPhone] = useState(null);
   const [otp, setOtp] = useState('');
   const [show, setShow] = useState(false);
-  const [final, setfinal] = useState('');
   const [confirmResult, setConfirmResult] = useState();
+  //   const [selectedCountry, setSelectedCountry] = useState('US');
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const auth = getAuth();
-    console.log('TESTTTS');
     window.recaptchaVerifier = new RecaptchaVerifier(
       'sign-in-button',
       {
         size: 'invisible',
-        callback: (response) => {
-          console.log('Rspnse ', response);
-        },
-        'expired-callback': () => {
-          console.log('Callback');
-        },
+        callback: () => {},
+        'expired-callback': () => {},
       },
       auth,
     );
@@ -38,18 +39,14 @@ function SignInPhone() {
     // if (phone === '' || phone.length < 10) return;
     const isValid = isValidPhoneNumber(phone);
     if (isValid) {
-      console.log('Validate Phone ', isValid);
       const auth = getAuth();
       const appVerifier = window.recaptchaVerifier;
-      console.log('testing', appVerifier);
       signInWithPhoneNumber(auth, phone, appVerifier)
         .then((confirmationResult) => {
           setShow(true);
           setConfirmResult(confirmationResult);
         })
-        .catch((error) => {
-          console.log('ERROR ', error);
-        });
+        .catch(() => {});
     } else {
       toast.error('Invalid phone number!');
     }
@@ -63,46 +60,71 @@ function SignInPhone() {
         navigate('/laveinte');
         console.log('User ', user);
       })
-      .catch(() => {});
+      .catch(() => {
+        toast.error('Your OTP code is incorrect!');
+      });
   };
-
-  console.log('Final ', setfinal);
-  console.log('Final ', final);
-  console.log('Show ', show);
-  console.log('Confirm Result ', confirmResult);
-  console.log('PHONE NUMMBER ==> ', phone);
 
   return (
     <div className="signin_phone">
-      {show ? (
-        <div>
-          <input
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            type="text"
-            placeholder="Enter OTP"
-          />
-          <button id="sign-in" type="submit" onClick={confirmCode} className="next_btn">
-            Submit
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="input_field">
-            <PhoneInput
-              defaultCountry="US"
-              placeholder="Enter phone number"
-              className="phone_input"
-              value={phone}
-              onChange={(e) => setPhone(e)}
+      {/* <AnimatedProgressProvider
+        valueStart={0}
+        valueEnd={66}
+        duration={1.4}
+        easingFunction={easeQuadInOut}
+      >
+        {(value) => {
+          const roundedValue = Math.round(value);
+          return (
+            <CircularProgressbar
+              value={value}
+              text={`${roundedValue}%`}
+              styles={buildStyles({ pathTransition: 'none' })}
             />
-            {/* <input value={phone} onChange={(e) => setPhone(e.target.value)} type="text" placeholder="Phone Number" /> */}
+          );
+        }}
+      </AnimatedProgressProvider> */}
+      <div className="signin_content">
+        {show ? (
+          <div className="otp_container">
+            <div className="otp_label">Enter OTP Code</div>
+            <OtpInput
+              className="otp_input"
+              value={otp}
+              onChange={(val) => setOtp(val)}
+              numInputs={6}
+              separator={<span>-</span>}
+            />
+            <button id="sign-in" type="submit" onClick={confirmCode} className="next_btn">
+              Submit
+            </button>
           </div>
-          <button id="sign-in-button" type="submit" onClick={signin} className="next_btn">
-            Next
-          </button>
-        </>
-      )}
+        ) : (
+          <>
+            <div className="input_field">
+              {/* <SelectCountry labels="en" selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry} /> */}
+              <PhoneInput
+                defaultCountry="US"
+                placeholder="Enter phone number"
+                //   country={selectedCountry}
+                className="phone_input"
+                value={phone}
+                onChange={(e) => setPhone(e)}
+              />
+              {/* <input value={phone} onChange={(e) => setPhone(e.target.value)} type="text" placeholder="Phone Number" /> */}
+            </div>
+            <button
+              disabled={!phone}
+              id="sign-in-button"
+              type="submit"
+              onClick={signin}
+              className="next_btn"
+            >
+              Next
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

@@ -28,8 +28,6 @@ export default function Header({
 
     const a = media ? '!' : '';
 
-    console.log('status ', media);
-
     if (time < 12 && time > 3) {
       setCurrentSatus(`Good Morning${a}`);
     } else if (time >= 12 && time < 18) {
