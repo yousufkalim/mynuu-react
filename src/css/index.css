@@ -9,6 +9,7 @@
 @import url('./Menu.css');
 @import url('./Products.css');
 @import url('./ProductPreview.css');
+@import url('./SignInPhone.css');
 @import url('./Responsiveness.css');
 
 /*    Import Font Family    */
@@ -39,7 +40,10 @@
   --text-gray-1: #646464;
   --text-gray-2: #b4b4b4;
   --text-gray-3: #e6e6e6;
+  --text-gray-4: #858585;
+  --text-gray-5: #777777;
   --text-yellow: #deae04;
+  --text-yellow-2: #c9a885;
   --border-gray-1: #646464;
   --border-gray-light: rgba(255, 255, 255, 0.1);
   --bg-gray-1: #1e1e1e;
@@ -87,6 +91,20 @@ body {
   top: 0;
   left: 0;
   right: 0;
+}
+
+/*    =====  Scroll Bar Design   =====    */
+body::-webkit-scrollbar {
+  width: 5px;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(36, 34, 34);
+  outline: 1px solid rgb(87, 88, 88);
 }
 
 /* ===================     Medi Queries    ===========================   */

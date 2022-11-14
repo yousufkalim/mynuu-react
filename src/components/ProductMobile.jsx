@@ -4,7 +4,9 @@ import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import ProductSectionHoc from '../hoc/ProductSectionHoc';
 
-function ProductMobile({ products, setOpenDetail, setSelectedProduct }) {
+function ProductMobile({
+  products, setOpenDetail, setSelectedProduct, media,
+}) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -46,8 +48,12 @@ function ProductMobile({ products, setOpenDetail, setSelectedProduct }) {
               />
             </div>
             <div className="product_content">
-              <div className="product_heading text_ellipsis_1">{item?.name}</div>
-              <div className="product_description text_ellipsis_1">{item?.description}</div>
+              <div className="product_heading text_ellipsis_1">
+                {media ? item.name?.toUpperCase() : item?.name}
+              </div>
+              <div className="product_description text_ellipsis_1">
+                {media ? item.description?.toUpperCase() : item?.description}
+              </div>
               <div className="product_price">{`${item?.price} USD`}</div>
             </div>
           </div>

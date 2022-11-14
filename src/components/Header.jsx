@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -14,8 +15,9 @@ export default function Header({
   setProducts,
   setLoading,
   restaurant,
+  media,
 }) {
-  const [currentSatus, setCurrentSatus] = useState(0);
+  const [currentSatus, setCurrentSatus] = useState('');
   const [focused, setFocused] = useState(false);
 
   const getTimeOfDay = () => {
@@ -24,12 +26,16 @@ export default function Header({
     // eslint-disable-next-line radix
     const time = parseInt(timeString);
 
+    const a = media ? '!' : '';
+
+    console.log('status ', media);
+
     if (time < 12 && time > 3) {
-      setCurrentSatus('Good Morning');
+      setCurrentSatus(`Good Morning${a}`);
     } else if (time >= 12 && time < 18) {
-      setCurrentSatus('Good Afternoon');
+      setCurrentSatus(`Good Afternoon${a}`);
     } else {
-      setCurrentSatus('Good Evening');
+      setCurrentSatus(`Good Evening${a}`);
     }
   };
 
@@ -86,7 +92,7 @@ export default function Header({
               type="submit"
               key={item.id}
             >
-              {item.name}
+              {media ? item.name?.toUpperCase() : item?.name}
             </button>
           ))}
         </div>

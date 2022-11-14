@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore/lite';
 
 const firebaseConfig = {
@@ -10,9 +11,9 @@ const firebaseConfig = {
   messagingSenderId: '286050939937',
   appId: '1:286050939937:web:22cf7fca8275c9f14c9f60',
   measurementId: 'G-NSFRXJG38D',
+  appVerificationDisabledForTesting: true,
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-export default db;
+export const firebase = initializeApp(firebaseConfig);
+export const db = getFirestore(firebase);
+export const auth = getAuth();

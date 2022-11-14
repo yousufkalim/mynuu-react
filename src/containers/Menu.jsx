@@ -35,6 +35,7 @@ function Menu() {
   const [loading, setLoading] = useState(false);
 
   const ref = useRef(null);
+  const media = window.matchMedia('(max-width: 500px)').matches;
 
   useEffect(() => {
     if (selectedMenu?.name) {
@@ -59,9 +60,8 @@ function Menu() {
 
   const onScroll = () => {
     const { scrollTop } = document.getElementById('menu');
-    const mobile = window.matchMedia('(max-width: 500px)').matches;
 
-    if (mobile) {
+    if (media) {
       if (scrollTop > 100) {
         setStopScroll(true);
       } else if (stopScroll) {
@@ -92,6 +92,7 @@ function Menu() {
         setSelectedCategory={setSelectedCategory}
         categories={categories}
         stopScroll={stopScroll}
+        media={media}
         restaurant={restaurant}
         setProducts={setProducts}
         setOpenList={setOpenList}
@@ -99,19 +100,29 @@ function Menu() {
       />
       {openList && (
         <div className="popup_container">
-          <MenuList menus={menus} setSelectedMenu={setSelectedMenu} setOpenList={setOpenList} />
+          <MenuList
+            media={media}
+            menus={menus}
+            setSelectedMenu={setSelectedMenu}
+            setOpenList={setOpenList}
+          />
         </div>
       )}
       <div className="menu_content">
         <AllProducts
           products={products}
+          media={media}
           setSelectedProduct={setSelectedProduct}
           setOpenDetail={setOpenDetail}
         />
       </div>
       {openDetail && (
         <div className="popup_container">
-          <ProductPreview selectedProduct={selectedProduct} setOpenDetail={setOpenDetail} />
+          <ProductPreview
+            media={media}
+            selectedProduct={selectedProduct}
+            setOpenDetail={setOpenDetail}
+          />
         </div>
       )}
     </div>

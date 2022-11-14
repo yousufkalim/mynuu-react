@@ -4,7 +4,9 @@ import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import ProductSectionHoc from '../hoc/ProductSectionHoc';
 
-function ProductSection2({ products, setOpenDetail, setSelectedProduct }) {
+function ProductSection2({
+  products, setOpenDetail, setSelectedProduct, section,
+}) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -24,6 +26,7 @@ function ProductSection2({ products, setOpenDetail, setSelectedProduct }) {
 
   return (
     <ProductSectionHoc
+      section={section}
       productsLength={products?.products?.length}
       sectionTitle={products?.categoryName}
     >

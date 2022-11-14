@@ -4,10 +4,9 @@ import ProductDetailCard from '../components/ProductDetailCard';
 import Cross from '../assets/icons/close.png';
 import CloseMobile from '../assets/icons/close_white.png';
 
-function ProductPreview({ setOpenDetail, selectedProduct }) {
+function ProductPreview({ setOpenDetail, selectedProduct, media }) {
   const ref = useRef(null);
   const productRef = useRef(null);
-  const media = window.matchMedia('(max-width: 500px)').matches;
 
   useEffect(() => {
     const { products, selectedId } = selectedProduct;
@@ -15,7 +14,7 @@ function ProductPreview({ setOpenDetail, selectedProduct }) {
       const findIndex = products?.findIndex((item) => item?.id === selectedId);
       if (findIndex !== 0) {
         const prevPosition = productRef?.current?.childNodes[findIndex]?.clientWidth;
-        const prevElementWidth = prevPosition + 40;
+        const prevElementWidth = prevPosition + 160;
         const elementPosition = productRef?.current?.childNodes[findIndex].offsetLeft;
         productRef?.current.scrollTo({
           left: media ? elementPosition - 20 : elementPosition - prevElementWidth,
@@ -40,6 +39,7 @@ function ProductPreview({ setOpenDetail, selectedProduct }) {
       >
         {selectedProduct?.products?.map((product) => (
           <ProductDetailCard
+            media={media}
             active={product?.id === selectedProduct?.selectedId}
             key={product?.id}
             product={product}

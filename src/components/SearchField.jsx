@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import SearchInput from 'react-search-input';
-import SearchIcon from '../assets/icons/SearchIcon.svg';
+// import SearchIcon from '../assets/icons/SearchIcon.svg';
+import Search from '../assets/icons/Search.png';
 import { getSearchedProducts } from '../utils/getData';
 
 function SearchField({ setFocused, setLoading, setProducts }) {
@@ -34,7 +35,7 @@ function SearchField({ setFocused, setLoading, setProducts }) {
         className="search-input"
         onChange={setSearchTerm}
       />
-      <img src={SearchIcon} alt="" className="search-input-icon" />
+      <img src={Search} alt="" className="search-input-icon" />
     </div>
   );
 }
