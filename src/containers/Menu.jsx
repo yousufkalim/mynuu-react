@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-return-await */
 import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import AllProducts from '../components/AllProducts';
 import Header from '../components/Header';
 import MenuList from '../components/MenuList';
-import Spinner from '../assets/icons/spinner.gif';
+import Spinner from '../components/Spinner';
 import ProductPreview from './ProductPreview';
 
 import {
@@ -14,7 +15,7 @@ import {
   getProductsByCategory,
   getProducts,
   getAllSubCategories,
-  getRestaurantById,
+  getRestaurantByUrl,
 } from '../utils/getData';
 
 function Menu() {
@@ -32,31 +33,39 @@ function Menu() {
   const [stopScroll, setStopScroll] = useState(false);
   const [openList, setOpenList] = useState(true);
   const [openDetail, setOpenDetail] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadData, setLoadData] = useState(false);
 
   const ref = useRef(null);
   const media = window.matchMedia('(max-width: 500px)').matches;
 
+  const params = useParams();
+
   useEffect(() => {
     if (selectedMenu?.name) {
-      getProductsByMenu(selectedMenu, setLoading, setProducts);
+      getProductsByMenu(selectedMenu, setLoading, setProducts, setLoadData);
     }
   }, [selectedMenu]);
 
   useEffect(() => {
     if (selectedCategory?.id) {
-      getProductsByCategory(selectedCategory, setLoading, setProducts);
-    } else {
-      getProducts(setLoading, setProducts);
+      getProductsByCategory(selectedCategory, setLoading, setProducts, setLoadData);
+    } else if (restaurant?.id) {
+      getProducts(setLoading, setProducts, restaurant?.id, setLoadData);
     }
   }, [selectedCategory]);
 
   useEffect(() => {
-    getAllMenus(setMenus);
-    getAllSubCategories(selectedMenu, setCategories);
-    getProducts(setLoading, setProducts);
-    getRestaurantById('UrFryd4KEYQsgh3DGViBvXqyIGP2', setRestaurant);
+    getRestaurantByUrl(params?.id, setRestaurant);
   }, []);
+
+  useEffect(() => {
+    if (restaurant?.id) {
+      getAllMenus(setMenus, restaurant?.id, setLoadData);
+      getAllSubCategories(selectedMenu, setCategories, restaurant?.id, setLoadData);
+      getProducts(setLoading, setProducts, restaurant?.id, setLoadData);
+    }
+  }, [restaurant]);
 
   const onScroll = () => {
     const { scrollTop } = document.getElementById('menu');
@@ -74,6 +83,8 @@ function Menu() {
     }
   };
 
+  console.log('loading ', loading);
+
   return (
     <div
       id="menu"
@@ -82,10 +93,8 @@ function Menu() {
       ref={ref}
       className="menu"
     >
-      {loading && (
-        <div className="spinner_container">
-          <img className="spinner" src={Spinner} alt="loading" />
-        </div>
+      {(!loadData || loading) && (
+        <Spinner loadData={loadData} setLoading={setLoading} setLoadData={setLoadData} timer={4} />
       )}
       <Header
         selectedCategory={selectedCategory}
@@ -112,6 +121,7 @@ function Menu() {
         <AllProducts
           products={products}
           media={media}
+          loadData={loadData}
           setSelectedProduct={setSelectedProduct}
           setOpenDetail={setOpenDetail}
         />

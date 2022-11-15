@@ -18,10 +18,55 @@
   align-items: center;
   justify-content: center;
   z-index: 10;
-  background: rgba(0, 0, 0, 0.9);
+  background: #000;
+}
+.spinner_wrapper {
+  position: relative;
+  width: 25%;
 }
 .spinner {
-  width: 15rem;
+  width: 100%;
+}
+.spinner_inner_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: transparent !important;
+  justify-content: center;
+}
+.spinner_inner {
+  width: 80%;
+  position: relative;
+  background-color: transparent !important;
+}
+
+.spinner_inner .rc-progress-circle-path {
+  stroke: #000 !important;
+  fill-opacity: 1 !important;
+}
+.inner_path_completed .rc-progress-circle-path {
+  stroke-dasharray: 304.734px, 307.734 !important;
+  stroke-dashoffset: 305.187 !important;
+  /* stroke: #fff !important; */
+  /* stroke-width: 0.1 !important; */
+}
+
+.inner_path_completed .rc-progress-circle-trail {
+  fill-opacity: 1 !important;
+}
+.spinner_percent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  color: #fff;
+  font-size: 8rem;
+  font-weight: bold;
 }
 
 /*  Mneu Popup  */
