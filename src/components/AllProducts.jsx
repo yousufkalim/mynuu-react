@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect } from 'react';
@@ -46,7 +47,7 @@ import ProductMobile from './ProductMobile';
 // ];
 
 function AllProducts({
-  products, setOpenDetail, setSelectedProduct, media,
+  products, setOpenDetail, setSelectedProduct, media, loadData,
 }) {
   const [mobileView, setMobileView] = useState(false);
 
@@ -70,8 +71,10 @@ function AllProducts({
       </div> */}
       {
         // eslint-disable-next-line consistent-return
-        mobileView
-          ? products?.map((item) => (
+        !products?.length && loadData ? (
+          <div className="no_data">(0) Results </div>
+        ) : mobileView ? (
+          products?.map((item) => (
             <ProductMobile
               setOpenDetail={setOpenDetail}
               setSelectedProduct={setSelectedProduct}
@@ -79,7 +82,8 @@ function AllProducts({
               products={item}
             />
           ))
-          : products?.map((item, ind) => {
+        ) : (
+          products?.map((item, ind) => {
             const index = ind;
             if (firstSecion === index) {
               firstSecion += 3;
@@ -118,6 +122,7 @@ function AllProducts({
               );
             }
           })
+        )
       }
     </div>
   );

@@ -10,9 +10,9 @@ import SignInPhone from '../containers/SignInPhone';
 function Index() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/laveinte" element={<Menu />} />
-      <Route path="/laveinte/signin/phone" element={<SignInPhone />} />
+      <Route path="/:id/signin/phone" element={<SignInPhone />} />
+      <Route path="/:id" element={<Home />} />
+      <Route path="/:id/menu" element={<Menu />} />
     </Routes>
   );
 }

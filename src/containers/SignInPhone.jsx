@@ -3,7 +3,7 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import { getAuth, signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import OtpInput from 'react-otp-input';
 import { toast } from 'react-toastify';
@@ -21,6 +21,9 @@ function SignInPhone() {
   //   const [selectedCountry, setSelectedCountry] = useState('US');
 
   const navigate = useNavigate();
+  const params = useParams();
+
+  console.log('Params ', params);
 
   useEffect(() => {
     const auth = getAuth();
@@ -57,7 +60,7 @@ function SignInPhone() {
       .confirm(otp)
       .then((result) => {
         const { user } = result;
-        navigate('/laveinte');
+        navigate(`/${params?.id}/menu`);
         console.log('User ', user);
       })
       .catch(() => {
