@@ -57,8 +57,8 @@ export default function Header({
         <div className="header_container_content">
           <img className="header_logo" src={restaurant?.logo} alt="logo" />
           <div className="header_logo_text">
-            <div className="header_logo_left">LA</div>
-            <div className="header_logo_right">VEINTE</div>
+            <div className="header_logo_left">{restaurant?.restaurantName}</div>
+            {/* <div className="header_logo_right">VEINTE</div> */}
           </div>
         </div>
       </div>
