@@ -16,6 +16,7 @@ export default function Header({
   setLoading,
   restaurant,
   media,
+  setLoadData,
 }) {
   const [currentSatus, setCurrentSatus] = useState('');
   const [focused, setFocused] = useState(false);
@@ -70,7 +71,9 @@ export default function Header({
           <div className={`header_right ${focused && 'header_focused'}`}>
             {/* // eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
             <SearchField
+              restaurantId={restaurant?.id}
               setLoading={setLoading}
+              setLoadData={setLoadData}
               setFocused={setFocused}
               setProducts={setProducts}
             />

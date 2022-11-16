@@ -6,6 +6,27 @@
   overflow-x: hidden;
   color: #fff;
 }
+.menu_not_found {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.page_not_found {
+  font-size: 4rem;
+  font-weight: 500;
+  color: #fff;
+}
+.not_found {
+  font-size: 5rem;
+  font-weight: 500;
+  color: #fff;
+}
 
 /*  Spinner   */
 .spinner_container {

@@ -8,8 +8,6 @@ function Spinner({
   const [percent, setPercent] = useState(0);
   const [innerPercent, setInnerPercent] = useState(102);
 
-  console.log('DATAA ', loadData);
-
   const changeIncrease = () => {
     if (percent <= 99) {
       setTimeout(() => {

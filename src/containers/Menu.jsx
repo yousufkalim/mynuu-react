@@ -56,7 +56,7 @@ function Menu() {
   }, [selectedCategory]);
 
   useEffect(() => {
-    getRestaurantByUrl(params?.id, setRestaurant);
+    getRestaurantByUrl(params?.id, setRestaurant, setLoadData);
   }, []);
 
   useEffect(() => {
@@ -83,8 +83,6 @@ function Menu() {
     }
   };
 
-  console.log('loading ', loading);
-
   return (
     <div
       id="menu"
@@ -96,43 +94,54 @@ function Menu() {
       {(!loadData || loading) && (
         <Spinner loadData={loadData} setLoading={setLoading} setLoadData={setLoadData} timer={4} />
       )}
-      <Header
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        categories={categories}
-        stopScroll={stopScroll}
-        media={media}
-        restaurant={restaurant}
-        setProducts={setProducts}
-        setOpenList={setOpenList}
-        setLoading={setLoading}
-      />
-      {openList && (
-        <div className="popup_container">
-          <MenuList
+      {restaurant?.id ? (
+        <>
+          <Header
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            setLoadData={setLoadData}
+            categories={categories}
+            stopScroll={stopScroll}
             media={media}
-            menus={menus}
-            setSelectedMenu={setSelectedMenu}
+            restaurant={restaurant}
+            setProducts={setProducts}
             setOpenList={setOpenList}
+            setLoading={setLoading}
           />
-        </div>
-      )}
-      <div className="menu_content">
-        <AllProducts
-          products={products}
-          media={media}
-          loadData={loadData}
-          setSelectedProduct={setSelectedProduct}
-          setOpenDetail={setOpenDetail}
-        />
-      </div>
-      {openDetail && (
-        <div className="popup_container">
-          <ProductPreview
-            media={media}
-            selectedProduct={selectedProduct}
-            setOpenDetail={setOpenDetail}
-          />
+          {openList && (
+            <div className="popup_container">
+              <MenuList
+                media={media}
+                menus={menus}
+                setSelectedCategory={setSelectedCategory}
+                setSelectedMenu={setSelectedMenu}
+                setOpenList={setOpenList}
+              />
+            </div>
+          )}
+          <div className="menu_content">
+            <AllProducts
+              products={products}
+              media={media}
+              loadData={loadData}
+              setSelectedProduct={setSelectedProduct}
+              setOpenDetail={setOpenDetail}
+            />
+          </div>
+          {openDetail && (
+            <div className="popup_container">
+              <ProductPreview
+                media={media}
+                selectedProduct={selectedProduct}
+                setOpenDetail={setOpenDetail}
+              />
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="menu_not_found">
+          <div className="not_found">404</div>
+          <div className="page_not_found">Page Not Found</div>
         </div>
       )}
     </div>
