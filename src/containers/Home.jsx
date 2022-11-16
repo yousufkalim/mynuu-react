@@ -1,25 +1,51 @@
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react-hooks/exhaustive-deps */
 // Init
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import Spinner from '../components/Spinner';
+import VerifyUrl from '../components/VerifyUrl';
+import { getRestaurantByUrl } from '../utils/getData';
 
 // Home Component
 export default function Home() {
+  const [restaurant, setRestaurant] = useState({});
+  const [loadData, setLoadData] = useState(false);
+
   const navigate = useNavigate();
   const params = useParams();
-  console.log('params ', params);
+
+  const check = true;
+
+  useEffect(() => {
+    getRestaurantByUrl(params?.id, setRestaurant, setLoadData, check);
+  }, [params?.id]);
 
   return (
-    <div className="home">
-      <button onClick={() => navigate(`/${params?.id}/menu`)} type="submit" className="home_start">
-        Tap to start
-      </button>
-      <button
-        onClick={() => navigate(`/${params?.id}/signin/phone`)}
-        type="submit"
-        className="home_start"
-      >
-        Get Started
-      </button>
-    </div>
+    <>
+      {!loadData ? (
+        <Spinner loadData={loadData} setLoadData={setLoadData} timer={4} />
+      ) : restaurant?.id ? (
+        <div className="home">
+          <button
+            onClick={() => navigate(`/${params?.id}/menu`)}
+            type="submit"
+            className="home_start"
+          >
+            Tap to start
+          </button>
+          <button
+            onClick={() => navigate(`/${params?.id}/signin/phone`)}
+            type="submit"
+            className="home_start"
+          >
+            Get Started
+          </button>
+        </div>
+      ) : (
+        <VerifyUrl />
+      )}
+    </>
   );
 }

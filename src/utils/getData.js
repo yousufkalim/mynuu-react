@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable operator-linebreak */
 /* eslint-disable indent */
 /* eslint-disable no-nested-ternary */
@@ -31,12 +32,15 @@ export const getCategorizedProducts = async (productCategories, allProducts) => 
 };
 
 // Get Restaurant by Id
-export const getRestaurantByUrl = async (url, setRestaurant) => {
+export const getRestaurantByUrl = async (url, setRestaurant, setLoadData, check) => {
   const docs = query(collection(db, 'restaurants'), where('shortUrl', '==', url));
   const restaurantDoc = await getDocs(docs);
   const data = restaurantDoc.docs?.map((docum) => ({ id: docum?.id, ...docum.data() }));
   if (data?.length) {
     setRestaurant(data?.[0]);
+    check && setLoadData(true);
+  } else {
+    setLoadData(true);
   }
 };
 
@@ -152,7 +156,6 @@ export const getSearchedProducts = async (
 ) => {
   setLoadData(false);
   if (searchTerm) {
-    console.log('Searched Term ', searchTerm);
     const searchText = searchTerm.toLowerCase();
     // const productQuery = query(
     //   collection(db, 'products'),
@@ -174,7 +177,6 @@ export const getSearchedProducts = async (
       ...docum.data(),
     }));
 
-    console.log('Find products ', allProducts);
     if (allProducts?.length > 0) {
       const allCategories = allProducts?.map((item) => item.categoryId);
       const uniqueCategories = [...new Set(allCategories)];
@@ -187,9 +189,9 @@ export const getSearchedProducts = async (
       // setLoading(false);
       return;
     }
+    setLoadData(true);
     // setLoading(false);
     setProducts([]);
-    setLoadData(true);
   } else {
     getProducts(setLoading, setProducts, restaurantId, setLoadData);
   }

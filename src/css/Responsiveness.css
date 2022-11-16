@@ -29,6 +29,12 @@
 
 /*   Tablet Medium   */
 @media screen and (max-width: 768px) {
+  .spinner_wrapper {
+    width: 60%;
+  }
+  .spinner_percent {
+    font-size: 6.5rem;
+  }
   .product {
     width: 35%;
     min-width: 35%;
@@ -81,6 +87,17 @@
     flex-basis: 95%;
 
     /* transform: scale(1.2); */
+  }
+  .verify_url .heading {
+    font-size: 3rem;
+  }
+
+  .verify_url .description {
+    font-size: 2rem;
+  }
+
+  .verify_url .logo {
+    font-size: 2.5rem;
   }
 }
 

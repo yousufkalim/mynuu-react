@@ -23,8 +23,6 @@ function SignInPhone() {
   const navigate = useNavigate();
   const params = useParams();
 
-  console.log('Params ', params);
-
   useEffect(() => {
     const auth = getAuth();
     window.recaptchaVerifier = new RecaptchaVerifier(
