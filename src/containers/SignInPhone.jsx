@@ -7,18 +7,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import OtpInput from 'react-otp-input';
 import { toast } from 'react-toastify';
-// import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-// import { easeQuadInOut } from 'd3-ease';
-// import AnimatedProgress from '../components/AnimatedProgress';
-// import AnimatedProgressProvider from '../components/AnimatedProgressProvider';
-// import SelectCountry from '../components/SelectCountry';
 
 function SignInPhone() {
   const [phone, setPhone] = useState(null);
   const [otp, setOtp] = useState('');
   const [show, setShow] = useState(false);
   const [confirmResult, setConfirmResult] = useState();
-  //   const [selectedCountry, setSelectedCountry] = useState('US');
 
   const navigate = useNavigate();
   const params = useParams();
@@ -37,7 +31,6 @@ function SignInPhone() {
   }, []);
 
   const signin = () => {
-    // if (phone === '' || phone.length < 10) return;
     const isValid = isValidPhoneNumber(phone);
     if (isValid) {
       const auth = getAuth();
@@ -68,23 +61,6 @@ function SignInPhone() {
 
   return (
     <div className="signin_phone">
-      {/* <AnimatedProgressProvider
-        valueStart={0}
-        valueEnd={66}
-        duration={1.4}
-        easingFunction={easeQuadInOut}
-      >
-        {(value) => {
-          const roundedValue = Math.round(value);
-          return (
-            <CircularProgressbar
-              value={value}
-              text={`${roundedValue}%`}
-              styles={buildStyles({ pathTransition: 'none' })}
-            />
-          );
-        }}
-      </AnimatedProgressProvider> */}
       <div className="signin_content">
         {show ? (
           <div className="otp_container">
@@ -103,16 +79,13 @@ function SignInPhone() {
         ) : (
           <>
             <div className="input_field">
-              {/* <SelectCountry labels="en" selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry} /> */}
               <PhoneInput
                 defaultCountry="US"
                 placeholder="Enter phone number"
-                //   country={selectedCountry}
                 className="phone_input"
                 value={phone}
                 onChange={(e) => setPhone(e)}
               />
-              {/* <input value={phone} onChange={(e) => setPhone(e.target.value)} type="text" placeholder="Phone Number" /> */}
             </div>
             <button
               disabled={!phone}

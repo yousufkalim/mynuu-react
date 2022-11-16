@@ -31,7 +31,7 @@ export const getCategorizedProducts = async (productCategories, allProducts) => 
   return await Promise.all(data).then((res) => res);
 };
 
-// Get Restaurant by Id
+// Get Restaurant by Short URL
 export const getRestaurantByUrl = async (url, setRestaurant, setLoadData, check) => {
   const docs = query(collection(db, 'restaurants'), where('shortUrl', '==', url));
   const restaurantDoc = await getDocs(docs);
