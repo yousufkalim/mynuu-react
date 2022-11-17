@@ -2,14 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { Circle } from 'rc-progress';
 
-function Spinner({
-  setLoadData, timer, loadData, setLoading,
-}) {
+function Spinner({ timer, loadData, setLoading }) {
   const [percent, setPercent] = useState(0);
   const [innerPercent, setInnerPercent] = useState(102);
 
   const changeIncrease = () => {
-    if (percent <= 99) {
+    if (percent <= 98) {
       setTimeout(() => {
         setPercent((prevState) => prevState + 1);
       }, timer);
@@ -17,26 +15,36 @@ function Spinner({
   };
 
   useEffect(() => {
-    if (percent === 100 && loadData) {
+    if (percent === 99 && loadData) {
       setTimeout(() => {
-        setLoadData(true);
-        setLoading(false);
+        setPercent((prevState) => prevState + 1);
       }, 200);
     }
   }, [percent, loadData]);
 
+  useEffect(() => {
+    if (percent === 100 && loadData) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, [percent, loadData]);
+
   const changeDecrease = () => {
-    if (percent >= -3) {
+    if (innerPercent >= -3) {
       setTimeout(() => {
         setInnerPercent((prevState) => prevState - 1);
-      }, 5);
+      }, timer);
     }
   };
 
   useEffect(() => {
     changeIncrease();
-    changeDecrease();
   }, [percent]);
+
+  useEffect(() => {
+    changeDecrease();
+  }, [innerPercent]);
 
   return (
     <div className="spinner_container">
@@ -51,7 +59,7 @@ function Spinner({
         />
         <div className="spinner_inner_container">
           <Circle
-            className={`spinner_inner ${percent === 100 && 'inner_path_completed'}`}
+            className={`spinner_inner ${percent >= 100 && 'inner_path_completed'}`}
             trailColor="#fff"
             trailWidth={2}
             percent={innerPercent}

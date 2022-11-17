@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import ProductSectionHoc from '../hoc/ProductSectionHoc';
 
 function ProductSection1({ products, setOpenDetail, setSelectedProduct }) {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoaded(true);
+    }, 4000);
+  }, []);
+
   const handleSelectProduct = (id) => {
     const obj = {
       products: products?.products,
@@ -24,8 +33,15 @@ function ProductSection1({ products, setOpenDetail, setSelectedProduct }) {
             key={item?.id}
             onClick={() => handleSelectProduct(item?.id)}
           >
+            {!loaded && <Skeleton className="skeleton" count={5} />}
+
             <div className="product_image">
-              <img className="product_img" alt="product" src={item?.image} />
+              <img
+                className="product_img"
+                onLoad={() => setLoaded(true)}
+                alt="product"
+                src={item?.image}
+              />
             </div>
             <div className="product_content">
               <div className="product_heading text_ellipsis_2">{item?.name}</div>

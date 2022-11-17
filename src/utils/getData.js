@@ -68,25 +68,20 @@ export const getProducts = async (setLoading, setProducts, restaurantId, setLoad
   setLoadData(true);
 };
 
-export const getAllSubCategories = async (
-  selectedMenu,
-  setCategories,
-  restaurantId,
-  setLoadData,
-) => {
+export const getAllSubCategories = async (selectedMenu, setCategories, restaurantId) => {
   const docs = query(collection(db, 'categories'), where('restaurantId', '==', restaurantId));
   const cats = await getDocs(docs);
   const data = cats?.docs?.map((docum) => ({ id: docum?.id, ...docum.data() }));
   setCategories(data);
-  setLoadData(true);
+  // setLoadData(true);
 };
 
-export const getAllMenus = async (setMenus, restaurantId, setLoadData) => {
+export const getAllMenus = async (setMenus, restaurantId) => {
   const docs = query(collection(db, 'menus'), where('restaurantId', '==', restaurantId));
   const menuDocs = await getDocs(docs);
   const data = menuDocs.docs?.map((docum) => ({ id: docum?.id, ...docum.data() }));
   setMenus(data);
-  setLoadData(true);
+  // setLoadData(true);
 };
 
 export const getProductsByMenu = async (selectedMenu, setLoading, setProducts, setLoadData) => {
@@ -157,12 +152,6 @@ export const getSearchedProducts = async (
   setLoadData(false);
   if (searchTerm) {
     const searchText = searchTerm.toLowerCase();
-    // const productQuery = query(
-    //   collection(db, 'products'),
-    //   orderBy('keyword'),
-    //   startAt(searchTerm),
-    //   endAt(`${searchTerm}\uf8ff`),
-    // );
     setLoading(true);
     const productQuery = query(
       collection(db, 'products'),
@@ -195,19 +184,4 @@ export const getSearchedProducts = async (
   } else {
     getProducts(setLoading, setProducts, restaurantId, setLoadData);
   }
-
-  // setLoading(true);
-  // const productDocs = await getDocs(dof);
-  // const allProducts = productDocs?.docs?.map((docum) => ({ id: docum.id, ...docum.data() }));
-  // if (allProducts?.length) {
-  //   const allCategories = allProducts?.map((item) => item.categoryId);
-  //   const uniqueCategories = [...new Set(allCategories)];
-
-  //   const limitCategories = uniqueCategories?.filter((cat, index) => index < 5);
-
-  //   const dataWithCategory = await getCategorizedProducts(limitCategories, allProducts);
-  //   setProducts(dataWithCategory);
-  //   setLoading(false);
-  // }
-  // setLoading(false);
 };

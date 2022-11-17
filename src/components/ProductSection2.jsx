@@ -1,12 +1,11 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import ProductSectionHoc from '../hoc/ProductSectionHoc';
 
-function ProductSection2({
-  products, setOpenDetail, setSelectedProduct, section,
-}) {
+function ProductSection2({ products, setOpenDetail, setSelectedProduct, section }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
