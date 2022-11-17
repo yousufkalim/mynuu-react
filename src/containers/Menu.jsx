@@ -61,8 +61,8 @@ function Menu() {
 
   useEffect(() => {
     if (restaurant?.id) {
-      getAllMenus(setMenus, restaurant?.id, setLoadData);
-      getAllSubCategories(selectedMenu, setCategories, restaurant?.id, setLoadData);
+      getAllMenus(setMenus, restaurant?.id);
+      getAllSubCategories(selectedMenu, setCategories, restaurant?.id);
       getProducts(setLoading, setProducts, restaurant?.id, setLoadData);
     }
   }, [restaurant]);
