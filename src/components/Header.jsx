@@ -52,7 +52,7 @@ export default function Header({
 
   return (
     <div className="header_wrapper">
-      <div className="header_container">
+      <div style={{ background: restaurant.landingImage }} className="header_container">
         <div className="header_overlay" />
         <div className="header_container_content">
           <img className="header_logo" src={restaurant?.logo} alt="logo" />
