@@ -158,13 +158,14 @@ export const getSearchedProducts = async (
       where('deleted', '==', false),
       where('enabled', '==', true),
       where('restaurantId', '==', restaurantId),
-      where('keyword', 'in', [searchText]),
     );
     const productsData = await getDocs(productQuery);
-    const allProducts = productsData?.docs?.map((docum) => ({
+    let allProducts = productsData?.docs?.map((docum) => ({
       id: docum?.id,
       ...docum.data(),
     }));
+
+    allProducts = allProducts.filter((a) => a.keyword?.includes(searchText));
 
     if (allProducts?.length > 0) {
       const allCategories = allProducts?.map((item) => item.categoryId);
