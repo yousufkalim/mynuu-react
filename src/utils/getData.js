@@ -165,8 +165,12 @@ export const getSearchedProducts = async (
       ...docum.data(),
     }));
 
-    allProducts = allProducts.filter((a) => a.keyword?.includes(searchText));
-
+    allProducts = allProducts.filter(
+      (a) =>
+        // eslint-disable-next-line implicit-arrow-linebreak
+        a.keyword?.toLowerCase().includes(searchText) ||
+        a.description?.toLowerCase().includes(searchText),
+    );
     if (allProducts?.length > 0) {
       const allCategories = allProducts?.map((item) => item.categoryId);
       const uniqueCategories = [...new Set(allCategories)];

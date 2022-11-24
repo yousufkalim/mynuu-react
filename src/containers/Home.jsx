@@ -28,6 +28,9 @@ export default function Home() {
         <Spinner loadData={loadData} setLoadData={setLoadData} timer={4} />
       ) : restaurant?.id ? (
         <div className="home">
+          <div className="landingImageDiv">
+            <img className="landingImage" src={restaurant?.landingImage} alt="Landing" />
+          </div>
           <button
             onClick={() => navigate(`/${params?.id}/menu`)}
             type="submit"

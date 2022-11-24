@@ -7,15 +7,26 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import OtpInput from 'react-otp-input';
 import { toast } from 'react-toastify';
+import { getRestaurantByUrl } from '../utils/getData';
 
 function SignInPhone() {
   const [phone, setPhone] = useState(null);
   const [otp, setOtp] = useState('');
   const [show, setShow] = useState(false);
   const [confirmResult, setConfirmResult] = useState();
+  const [restaurant, setRestaurant] = useState({});
+  // eslint-disable-next-line no-unused-vars
+  const [loadData, setLoadData] = useState(false);
+
+  const check = true;
 
   const navigate = useNavigate();
   const params = useParams();
+
+  useEffect(() => {
+    getRestaurantByUrl(params?.id, setRestaurant, setLoadData, check);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params?.id]);
 
   useEffect(() => {
     const auth = getAuth();
@@ -40,7 +51,9 @@ function SignInPhone() {
           setShow(true);
           setConfirmResult(confirmationResult);
         })
-        .catch(() => {});
+        .catch((err) => {
+          console.log(err, 'err');
+        });
     } else {
       toast.error('Invalid phone number!');
     }
@@ -61,6 +74,9 @@ function SignInPhone() {
 
   return (
     <div className="signin_phone">
+      <div className="landingImageDiv">
+        <img className="landingImage" src={restaurant?.landingImage} alt="Landing" />
+      </div>
       <div className="signin_content">
         {show ? (
           <div className="otp_container">
