@@ -86,13 +86,16 @@ function Menu() {
   return (
     <div
       id="menu"
-      style={{ overflowY: openList ? 'hidden' : 'auto' }}
+      style={{
+        overflowY: openList ? 'hidden' : 'auto',
+        background: restaurant?.guestCheckInColor && `#${restaurant?.guestCheckInColor}`,
+      }}
       onScroll={onScroll}
       ref={ref}
       className="menu"
     >
       {(!loadData || loading) && (
-        <Spinner loadData={loadData} setLoading={setLoading} setLoadData={setLoadData} timer={4} />
+        <Spinner loadData={loadData} setLoading={setLoading} setLoadData={setLoadData} timer={14} />
       )}
       {restaurant?.id ? (
         <>
@@ -132,6 +135,7 @@ function Menu() {
             <div className="popup_container">
               <ProductPreview
                 media={media}
+                restaurant={restaurant}
                 selectedProduct={selectedProduct}
                 setOpenDetail={setOpenDetail}
               />

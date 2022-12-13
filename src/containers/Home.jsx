@@ -4,6 +4,7 @@
 // Init
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import Spinner from '../components/Spinner';
 import VerifyUrl from '../components/VerifyUrl';
 import { getRestaurantByUrl } from '../utils/getData';
@@ -28,6 +29,13 @@ export default function Home() {
         <Spinner loadData={loadData} setLoadData={setLoadData} timer={4} />
       ) : restaurant?.id ? (
         <div className="home">
+          <Helmet>
+            <meta charSet="utf-8" />
+            <title>My Title</title>
+            <link rel="canonical" href={restaurant?.logo} />
+            <link rel="apple-touch-icon" href={restaurant?.logo} />
+            <link rel="apple-touch-icon" sizes="72x72" href={restaurant?.logo} />
+          </Helmet>
           <div className="landingImageDiv">
             <img className="landingImage" src={restaurant?.landingImage} alt="Landing" />
           </div>
