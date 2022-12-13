@@ -27,11 +27,13 @@ export default function Header({
     // eslint-disable-next-line radix
     const time = parseInt(timeString);
 
+    console.log('Current time ', time);
+
     const a = media ? '!' : '';
 
     if (time < 12 && time > 3) {
       setCurrentSatus(`Good Morning${a}`);
-    } else if (time >= 12 && time < 18) {
+    } else if (time >= 12 && time < 17) {
       setCurrentSatus(`Good Afternoon${a}`);
     } else {
       setCurrentSatus(`Good Evening${a}`);
