@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -27,6 +28,8 @@ export default function Home() {
     console.log('Update runs');
     if (restaurant?.fontFamily) {
       document.querySelector('body').style.fontFamily = restaurant?.fontFamily;
+      document.getElementsByTagName('meta')['title'].content = restaurant?.title;
+      document.getElementsByTagName('meta')['description'].content = restaurant?.description;
     }
   }, [restaurant]);
 
