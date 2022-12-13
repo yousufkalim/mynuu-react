@@ -2,6 +2,7 @@
 /* eslint-disable no-return-await */
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import AllProducts from '../components/AllProducts';
 import Header from '../components/Header';
@@ -61,6 +62,9 @@ function Menu() {
 
   useEffect(() => {
     if (restaurant?.id) {
+      if (restaurant?.fontFamily) {
+        document.querySelector('body').style.fontFamily = restaurant?.fontFamily;
+      }
       getAllMenus(setMenus, restaurant?.id);
       getAllSubCategories(selectedMenu, setCategories, restaurant?.id);
       getProducts(setLoading, setProducts, restaurant?.id, setLoadData);
@@ -94,6 +98,14 @@ function Menu() {
       ref={ref}
       className="menu"
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{restaurant?.restaurantName}</title>
+        <meta name="description" content={restaurant?.description} />
+        <link rel="canonical" href={restaurant?.logo} />
+        <link rel="apple-touch-icon" href={restaurant?.logo} />
+        <link rel="apple-touch-icon" sizes="72x72" href={restaurant?.logo} />
+      </Helmet>
       {(!loadData || loading) && (
         <Spinner loadData={loadData} setLoading={setLoading} setLoadData={setLoadData} timer={14} />
       )}

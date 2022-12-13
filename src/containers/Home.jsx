@@ -23,15 +23,25 @@ export default function Home() {
     getRestaurantByUrl(params?.id, setRestaurant, setLoadData, check);
   }, [params?.id]);
 
+  useEffect(() => {
+    console.log('Update runs');
+    if (restaurant?.fontFamily) {
+      document.querySelector('body').style.fontFamily = restaurant?.fontFamily;
+    }
+  }, [restaurant]);
+
+  console.log('Restaurant ', restaurant);
+
   return (
     <>
       {!loadData ? (
         <Spinner loadData={loadData} setLoadData={setLoadData} timer={4} />
       ) : restaurant?.id ? (
-        <div className="home">
+        <div style={{ fontFamily: restaurant?.fontFamily }} className="home">
           <Helmet>
             <meta charSet="utf-8" />
-            <title>My Title</title>
+            <title>{restaurant?.restaurantName}</title>
+            <meta name="description" content={restaurant?.description} />
             <link rel="canonical" href={restaurant?.logo} />
             <link rel="apple-touch-icon" href={restaurant?.logo} />
             <link rel="apple-touch-icon" sizes="72x72" href={restaurant?.logo} />
@@ -40,6 +50,7 @@ export default function Home() {
             <img className="landingImage" src={restaurant?.landingImage} alt="Landing" />
           </div>
           <button
+            style={{ fontFamily: restaurant?.fontFamily }}
             onClick={() => navigate(`/${params?.id}/menu`)}
             type="submit"
             className="home_start"

@@ -2,6 +2,8 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+
 import { getAuth, signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 import { useNavigate, useParams } from 'react-router-dom';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
@@ -41,6 +43,12 @@ function SignInPhone() {
     );
   }, []);
 
+  useEffect(() => {
+    if (restaurant?.fontFamily) {
+      document.querySelector('body').style.fontFamily = restaurant?.fontFamily;
+    }
+  }, [restaurant]);
+
   const signin = () => {
     const isValid = isValidPhoneNumber(phone);
     if (isValid) {
@@ -74,6 +82,14 @@ function SignInPhone() {
 
   return (
     <div className="signin_phone">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{restaurant?.restaurantName}</title>
+        <meta name="description" content={restaurant?.description} />
+        <link rel="canonical" href={restaurant?.logo} />
+        <link rel="apple-touch-icon" href={restaurant?.logo} />
+        <link rel="apple-touch-icon" sizes="72x72" href={restaurant?.logo} />
+      </Helmet>
       <div className="landingImageDiv">
         <img className="landingImage" src={restaurant?.landingImage} alt="Landing" />
       </div>
