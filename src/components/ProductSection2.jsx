@@ -3,10 +3,13 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { useNavigate } from 'react-router-dom';
 import ProductSectionHoc from '../hoc/ProductSectionHoc';
 
 function ProductSection2({ products, setOpenDetail, setSelectedProduct, section }) {
   const [loaded, setLoaded] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
@@ -19,6 +22,7 @@ function ProductSection2({ products, setOpenDetail, setSelectedProduct, section 
       products: products?.products,
       selectedId: id,
     };
+    navigate(`?productId=${id}`);
     setSelectedProduct(obj);
     setOpenDetail(true);
   };

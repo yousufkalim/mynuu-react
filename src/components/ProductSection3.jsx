@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { useNavigate } from 'react-router-dom';
 import ProductSectionHoc from '../hoc/ProductSectionHoc';
 
 function ProductSection3({ products, setOpenDetail, setSelectedProduct }) {
   const [loaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
+
   const handleSelectProduct = (id) => {
     const obj = {
       products: products?.products,
       selectedId: id,
     };
     setSelectedProduct(obj);
+    navigate(`?productId=${id}`);
     setOpenDetail(true);
   };
 
