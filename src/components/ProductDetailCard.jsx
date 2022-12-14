@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import share from '../assets/icons/share.png';
@@ -9,7 +10,11 @@ function ProductDetailCard({ product, active, media }) {
       text: product?.description,
       url: window.location.href,
     };
-    await navigator.share(shareData);
+    if (!navigator.canShare) {
+      window.alert('Your browser does not support the Web Share API.');
+    } else {
+      await navigator.share(shareData);
+    }
   };
   return (
     <div className={`card_detail ${active && 'card_detail-active'}`}>
