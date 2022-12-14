@@ -1,12 +1,17 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable no-unused-expressions */
 import React, { useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ProductDetailCard from '../components/ProductDetailCard';
 import Cross from '../assets/icons/close.png';
 import CloseMobile from '../assets/icons/close_white.png';
 
-function ProductPreview({ setOpenDetail, selectedProduct, media }) {
+function ProductPreview({ setOpenDetail, selectedProduct, setSelectedProduct, media }) {
   const ref = useRef(null);
   const productRef = useRef(null);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const { products, selectedId } = selectedProduct;
@@ -26,7 +31,15 @@ function ProductPreview({ setOpenDetail, selectedProduct, media }) {
 
   return (
     <div ref={ref} className="product_preview">
-      <button className="preview_close" type="submit" onClick={() => setOpenDetail(false)}>
+      <button
+        className="preview_close"
+        type="submit"
+        onClick={() => {
+          setSelectedProduct({ selectedId: '', products: [] });
+          setOpenDetail(false);
+          navigate(location?.pathname);
+        }}
+      >
         <img className="preview_close_img" src={media ? CloseMobile : Cross} alt="close" />
       </button>
       <div

@@ -1,7 +1,8 @@
+/* eslint-disable no-useless-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-return-await */
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import AllProducts from '../components/AllProducts';
@@ -26,7 +27,7 @@ function Menu() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedMenu, setSelectedMenu] = useState();
   const [selectedProduct, setSelectedProduct] = useState({
-    products: {},
+    products: [],
     selectedId: '',
   });
   const [restaurant, setRestaurant] = useState({});
@@ -41,6 +42,7 @@ function Menu() {
   const media = window.matchMedia('(max-width: 500px)').matches;
 
   const params = useParams();
+  const location = useLocation();
 
   useEffect(() => {
     if (selectedMenu?.name) {
@@ -59,6 +61,20 @@ function Menu() {
   useEffect(() => {
     getRestaurantByUrl(params?.id, setRestaurant, setLoadData);
   }, []);
+
+  useEffect(() => {
+    const productId = location?.search?.split('=')[1];
+    if (products?.length) {
+      products?.forEach((prods) => {
+        const findProduct = prods?.products?.find((item) => item?.id === productId);
+        if (findProduct) {
+          setSelectedProduct({ selectedId: findProduct?.id, products: prods?.products });
+          setOpenList(false);
+          return;
+        }
+      });
+    }
+  }, [params, products]);
 
   useEffect(() => {
     if (restaurant?.id) {
@@ -118,7 +134,7 @@ function Menu() {
             setOpenList={setOpenList}
             setLoading={setLoading}
           />
-          {openList && (
+          {openList && !location?.search && (
             <div className="popup_container">
               <MenuList
                 media={media}
@@ -138,11 +154,12 @@ function Menu() {
               setOpenDetail={setOpenDetail}
             />
           </div>
-          {openDetail && (
+          {(openDetail || selectedProduct?.products?.length) && (
             <div className="popup_container">
               <ProductPreview
                 media={media}
                 restaurant={restaurant}
+                setSelectedProduct={setSelectedProduct}
                 selectedProduct={selectedProduct}
                 setOpenDetail={setOpenDetail}
               />

@@ -1,9 +1,8 @@
+/* eslint-disable object-curly-newline */
 import React from 'react';
 import Cross from '../assets/icons/close.png';
 
-function MenuList({
-  menus, setSelectedMenu, setOpenList, setSelectedCategory,
-}) {
+function MenuList({ menus, setSelectedMenu, setOpenList, setSelectedCategory }) {
   const handleMenu = (menu) => {
     setSelectedMenu(menu);
     setSelectedCategory('');
