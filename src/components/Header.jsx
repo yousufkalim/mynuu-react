@@ -27,8 +27,6 @@ export default function Header({
     // eslint-disable-next-line radix
     const time = parseInt(timeString);
 
-    console.log('Current time ', time);
-
     const a = media ? '!' : '';
 
     if (time < 12 && time > 3) {
