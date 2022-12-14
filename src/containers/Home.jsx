@@ -25,15 +25,10 @@ export default function Home() {
   }, [params?.id]);
 
   useEffect(() => {
-    console.log('Update runs');
     if (restaurant?.fontFamily) {
       document.querySelector('body').style.fontFamily = restaurant?.fontFamily;
-      document.getElementsByTagName('meta')['title'].content = restaurant?.title;
-      document.getElementsByTagName('meta')['description'].content = restaurant?.description;
     }
   }, [restaurant]);
-
-  console.log('Restaurant ', restaurant);
 
   return (
     <>
@@ -42,12 +37,8 @@ export default function Home() {
       ) : restaurant?.id ? (
         <div style={{ fontFamily: restaurant?.fontFamily }} className="home">
           <Helmet>
-            <meta charSet="utf-8" />
             <title>{restaurant?.restaurantName}</title>
             <meta name="description" content={restaurant?.description} />
-            <link rel="canonical" href={restaurant?.logo} />
-            <link rel="apple-touch-icon" href={restaurant?.logo} />
-            <link rel="apple-touch-icon" sizes="72x72" href={restaurant?.logo} />
           </Helmet>
           <div className="landingImageDiv">
             <img className="landingImage" src={restaurant?.landingImage} alt="Landing" />

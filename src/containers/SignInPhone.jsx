@@ -70,10 +70,8 @@ function SignInPhone() {
   const confirmCode = () => {
     confirmResult
       .confirm(otp)
-      .then((result) => {
-        const { user } = result;
+      .then(() => {
         navigate(`/${params?.id}/menu`);
-        console.log('User ', user);
       })
       .catch(() => {
         toast.error('Your OTP code is incorrect!');
@@ -83,12 +81,8 @@ function SignInPhone() {
   return (
     <div className="signin_phone">
       <Helmet>
-        <meta charSet="utf-8" />
         <title>{restaurant?.restaurantName}</title>
         <meta name="description" content={restaurant?.description} />
-        <link rel="canonical" href={restaurant?.logo} />
-        <link rel="apple-touch-icon" href={restaurant?.logo} />
-        <link rel="apple-touch-icon" sizes="72x72" href={restaurant?.logo} />
       </Helmet>
       <div className="landingImageDiv">
         <img className="landingImage" src={restaurant?.landingImage} alt="Landing" />
