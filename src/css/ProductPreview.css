@@ -119,6 +119,7 @@
 .card_detail .product_share {
   border: 1px solid rgba(255, 255, 255, 0.53);
   color: rgba(255, 255, 255, 0.53);
+  cursor: pointer;
   padding: 1rem 2rem;
   font-size: 1.4rem;
   border-radius: 2rem;
