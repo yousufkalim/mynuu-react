@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 /* eslint-disable no-useless-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-return-await */
@@ -75,6 +76,16 @@ function Menu() {
       });
     }
   }, [params, products]);
+
+  useEffect(() => {
+    if (selectedProduct?.selectedId) {
+      const product = selectedProduct?.products?.find(
+        (item) => item?.id === selectedProduct?.selectedId,
+      );
+      document.getElementsByTagName('meta')['title'].content = product?.name;
+      document.getElementsByTagName('meta')['description'].content = product?.description;
+    }
+  }, [selectedProduct]);
 
   useEffect(() => {
     if (restaurant?.id) {
