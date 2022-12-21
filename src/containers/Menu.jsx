@@ -3,7 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-return-await */
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import AllProducts from '../components/AllProducts';
@@ -40,6 +40,8 @@ function Menu() {
   const [loading, setLoading] = useState(true);
   const [loadData, setLoadData] = useState(false);
 
+  const navigate = useNavigate();
+
   const ref = useRef(null);
   const media = window.matchMedia('(max-width: 500px)').matches;
 
@@ -66,16 +68,19 @@ function Menu() {
 
   useEffect(() => {
     const productId = location?.search?.split('=')[1];
-    if (allProducts?.length) {
+    if (allProducts?.length && productId) {
+      let prod;
       allProducts?.forEach((prods) => {
         const findProduct = prods?.products?.find((item) => item?.id === productId);
-
         if (findProduct) {
+          prod = findProduct?.id;
           setSelectedProduct({ selectedId: findProduct?.id, products: prods?.products });
           setOpenList(false);
-          return;
         }
       });
+      if (!prod) {
+        navigate(location?.pathname);
+      }
     }
   }, [params, products, allProducts]);
 
