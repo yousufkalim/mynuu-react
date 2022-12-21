@@ -65,10 +65,12 @@ export const getProducts = async (
 
     const uniqueCategories = [...new Set(allCategories)];
 
-    const limitCategories = uniqueCategories?.filter((cat, index) => index < 5);
+    // const limitCategories = uniqueCategories?.filter((cat, index) => index < 5);
 
-    const dataWithCategory = await getCategorizedProducts(limitCategories, allProducts);
+    // const dataWithCategory = await getCategorizedProducts(limitCategories, allProducts);
+
     const allDataWithCategory = await getCategorizedProducts(uniqueCategories, allProducts);
+    const dataWithCategory = allDataWithCategory?.filter((cat, index) => index < 5);
     setAllProducts(allDataWithCategory);
     setProducts(dataWithCategory);
     setLoadData(true);
