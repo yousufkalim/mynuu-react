@@ -44,7 +44,13 @@ export const getRestaurantByUrl = async (url, setRestaurant, setLoadData, check)
   }
 };
 
-export const getProducts = async (setLoading, setProducts, restaurantId, setLoadData) => {
+export const getProducts = async (
+  setLoading,
+  setProducts,
+  restaurantId,
+  setLoadData,
+  setAllProducts,
+) => {
   const docs = query(
     collection(db, 'products'),
     where('deleted', '==', false),
@@ -62,6 +68,8 @@ export const getProducts = async (setLoading, setProducts, restaurantId, setLoad
     const limitCategories = uniqueCategories?.filter((cat, index) => index < 5);
 
     const dataWithCategory = await getCategorizedProducts(limitCategories, allProducts);
+    const allDataWithCategory = await getCategorizedProducts(uniqueCategories, allProducts);
+    setAllProducts(allDataWithCategory);
     setProducts(dataWithCategory);
     setLoadData(true);
   }

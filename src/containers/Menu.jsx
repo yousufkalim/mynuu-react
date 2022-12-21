@@ -25,6 +25,7 @@ function Menu() {
   const [menus, setMenus] = useState([]);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedMenu, setSelectedMenu] = useState();
   const [selectedProduct, setSelectedProduct] = useState({
@@ -55,7 +56,7 @@ function Menu() {
     if (selectedCategory?.id) {
       getProductsByCategory(selectedCategory, setLoading, setProducts, setLoadData);
     } else if (restaurant?.id) {
-      getProducts(setLoading, setProducts, restaurant?.id, setLoadData);
+      getProducts(setLoading, setProducts, restaurant?.id, setLoadData, setAllProducts);
     }
   }, [selectedCategory]);
 
@@ -65,9 +66,10 @@ function Menu() {
 
   useEffect(() => {
     const productId = location?.search?.split('=')[1];
-    if (products?.length) {
-      products?.forEach((prods) => {
+    if (allProducts?.length) {
+      allProducts?.forEach((prods) => {
         const findProduct = prods?.products?.find((item) => item?.id === productId);
+
         if (findProduct) {
           setSelectedProduct({ selectedId: findProduct?.id, products: prods?.products });
           setOpenList(false);
@@ -75,7 +77,7 @@ function Menu() {
         }
       });
     }
-  }, [params, products]);
+  }, [params, products, allProducts]);
 
   useEffect(() => {
     if (restaurant?.id) {
@@ -84,7 +86,7 @@ function Menu() {
       }
       getAllMenus(setMenus, restaurant?.id);
       getAllSubCategories(selectedMenu, setCategories, restaurant?.id);
-      getProducts(setLoading, setProducts, restaurant?.id, setLoadData);
+      getProducts(setLoading, setProducts, restaurant?.id, setLoadData, setAllProducts);
     }
   }, [restaurant]);
 
